@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13529" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1F0-54-KWL">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13507"/>
+    </dependencies>
+    <scenes>
+        <!--idResult-->
+        <scene sceneID="dMw-rk-WeW">
+            <objects>
+                <controller identifier="idResult" id="VzO-3v-BZn" customClass="ResultInterfaceController" customModule="SurfingGoWatchApp_Extension">
+                    <items>
+                        <group width="1" alignment="left" id="gLS-lI-WbH">
+                            <items>
+                                <label alignment="left" text="2017/10/17" id="qhs-OG-oBc"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" id="wxC-sg-yZ7">
+                            <items>
+                                <label height="20" alignment="left" text="---" id="X6a-gl-bhB"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" id="Upn-aW-S1e">
+                            <items>
+                                <label alignment="left" text="--Wave" id="e7r-ux-Hh6"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" id="JGY-Ah-WEZ">
+                            <items>
+                                <label alignment="left" text="最長--メートル" id="F4j-Cb-ieu"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" id="NBS-Zu-tx5">
+                            <items>
+                                <label alignment="left" text="最速--Km/h" id="rxI-6K-dZ8"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="left" id="tNy-Qh-KAB">
+                            <items>
+                                <label alignment="left" text="合計--メートル" id="uss-zS-VYN"/>
+                            </items>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="longestDistanceLabel" destination="F4j-Cb-ieu" id="Yx4-t9-n6A"/>
+                        <outlet property="startedOnLabel" destination="qhs-OG-oBc" id="jXt-Ey-z6F"/>
+                        <outlet property="statedAtAndTimeLabel" destination="X6a-gl-bhB" id="hja-3z-9Pm"/>
+                        <outlet property="topSpeedLabel" destination="rxI-6K-dZ8" id="0lg-3p-E0Y"/>
+                        <outlet property="totalDistanceLabel" destination="uss-zS-VYN" id="ikQ-eH-DfR"/>
+                        <outlet property="waveCountLabel" destination="e7r-ux-Hh6" id="df3-GN-i4h"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="216" y="53"/>
+        </scene>
+        <!--idStart-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller identifier="idStart" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SurfingGoWatchApp" customModuleProvider="target">
+                    <items>
+                        <button width="1" height="73" alignment="left" title="START" backgroundImage="circle" id="Wcm-Ek-BBr">
+                            <fontDescription key="font" type="boldSystem" pointSize="37"/>
+                            <connections>
+                                <action selector="doStart" destination="AgC-eL-Hgc" id="Qag-OZ-KBF"/>
+                            </connections>
+                        </button>
+                        <label height="17" alignment="right" text="フリーサーフィン" id="obB-b8-f7H">
+                            <fontDescription key="font" type="system" pointSize="18"/>
+                        </label>
+                        <slider width="1" height="35" alignment="left" value="15" minimum="10" maximum="90" steps="16" id="3op-kG-9mX">
+                            <connections>
+                                <action selector="onChangeHeatTimeSlider:" destination="AgC-eL-Hgc" id="ltz-C8-tU2"/>
+                            </connections>
+                        </slider>
+                    </items>
+                    <connections>
+                        <outlet property="heatTimeSlider" destination="3op-kG-9mX" id="WVq-as-TzE"/>
+                        <outlet property="sessionTypeLabel" destination="obB-b8-f7H" id="7fo-t1-GW2"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="220" y="337"/>
+        </scene>
+        <!--idTimeInterface-->
+        <scene sceneID="1Gn-gY-iS7">
+            <objects>
+                <controller identifier="idTimeInterface" id="3bT-cL-TO3" customClass="TimeInterfaceController" customModule="SurfingGoWatchApp_Extension">
+                    <items>
+                        <group width="1" alignment="left" id="zE2-GN-Ute">
+                            <items>
+                                <group alignment="left" verticalAlignment="bottom" id="cpu-Nj-IjR">
+                                    <items>
+                                        <label alignment="left" verticalAlignment="bottom" text="0" textAlignment="right" baselineAdjustment="alignCenters" id="eRI-6T-Ik1">
+                                            <fontDescription key="font" type="system" pointSize="22"/>
+                                        </label>
+                                        <label alignment="left" verticalAlignment="bottom" text="Wave" textAlignment="left" id="DeM-ZC-Do3"/>
+                                    </items>
+                                </group>
+                                <group alignment="right" verticalAlignment="bottom" id="s9f-Fy-tAr">
+                                    <items>
+                                        <label alignment="right" verticalAlignment="bottom" text="0" textAlignment="right" id="qNL-zf-p9N">
+                                            <fontDescription key="font" type="system" pointSize="22"/>
+                                        </label>
+                                        <label alignment="right" verticalAlignment="bottom" text="M" textAlignment="right" id="RUY-R3-Uxx">
+                                            <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                        </label>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                        <timer width="1" height="66" alignment="right" verticalAlignment="center" textAlignment="right" previewedSeconds="30000" id="BO5-Pz-vaT">
+                            <color key="textColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" type="system" weight="medium" pointSize="44"/>
+                            <calendarUnit key="units" minute="YES" second="YES"/>
+                            <variation key="device=watch42mm">
+                                <fontDescription key="font" type="system" weight="medium" pointSize="51"/>
+                            </variation>
+                        </timer>
+                    </items>
+                    <connections>
+                        <outlet property="lastWaveDistance" destination="qNL-zf-p9N" id="tP9-mg-kLw"/>
+                        <outlet property="timer" destination="BO5-Pz-vaT" id="m9c-bC-gYD"/>
+                        <outlet property="waveCount" destination="eRI-6T-Ik1" id="d4p-y4-SGn"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="495" y="336"/>
+        </scene>
+        <!--idStopInterface-->
+        <scene sceneID="DHm-bD-XcH">
+            <objects>
+                <controller identifier="idStopInterface" id="JKI-q7-8eP" customClass="StopInterfaceController" customModule="SurfingGoWatchApp_Extension">
+                    <items>
+                        <button width="1" height="74" alignment="left" title="STOP" id="vmR-fQ-Bgn">
+                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" type="system" weight="semibold" pointSize="30"/>
+                            <connections>
+                                <action selector="doStop" destination="JKI-q7-8eP" id="uZH-Cz-6IX"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="LOCK" id="FmB-0u-a7X">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" type="system" weight="medium" pointSize="25"/>
+                            <connections>
+                                <action selector="doLock" destination="JKI-q7-8eP" id="b1l-Tp-3Oq"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <menu key="menu" id="0np-ln-ebr">
+                        <items>
+                            <menuItem title="保存" icon="accept" id="XIF-jD-uyZ"/>
+                            <menuItem title="破棄" icon="trash" id="DlK-ov-2hZ"/>
+                            <menuItem title="キャンセル" icon="decline" id="vR2-Ud-LBE"/>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="lockButton" destination="FmB-0u-a7X" id="htc-EL-hYR"/>
+                        <outlet property="stopButton" destination="vmR-fQ-Bgn" id="dds-C4-xR5"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="502" y="630"/>
+        </scene>
+        <!--idMapInterface-->
+        <scene sceneID="SEO-Iu-b12">
+            <objects>
+                <controller identifier="idMapInterface" id="zLj-ff-op4" customClass="MapInterfaceController" customModule="SurfingGoWatchApp_Extension">
+                    <items>
+                        <map height="141" alignment="left" id="JOa-2H-91I"/>
+                    </items>
+                    <connections>
+                        <outlet property="mapView" destination="JOa-2H-91I" id="9ha-Bg-TAW"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="750" y="656"/>
+        </scene>
+        <!--Root Interface Controller-->
+        <scene sceneID="3Kc-BG-2zw">
+            <objects>
+                <controller id="1F0-54-KWL" customClass="RootInterfaceController" customModule="SurfingGoWatchApp_Extension"/>
+            </objects>
+            <point key="canvasLocation" x="-41" y="337"/>
+        </scene>
+        <!--idSetting-->
+        <scene sceneID="lbG-1f-94y">
+            <objects>
+                <controller identifier="idSetting" id="qer-ww-kTV" customClass="SettingInterfaceController" customModule="SurfingGoWatchApp_Extension">
+                    <items>
+                        <switch width="1" alignment="left" title="ヒート形式" id="3jc-Kt-KDm">
+                            <connections>
+                                <action selector="doSwitchHeatSession:" destination="qer-ww-kTV" id="XBu-gR-Byj"/>
+                            </connections>
+                        </switch>
+                        <switch width="1" alignment="left" title="オートロック" id="kI6-oq-BLc">
+                            <fontDescription key="font" type="system" pointSize="13"/>
+                            <variation key="device=watch42mm">
+                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                            </variation>
+                            <connections>
+                                <action selector="doSwitchAutoLock:" destination="qer-ww-kTV" id="5gL-S1-RMd"/>
+                            </connections>
+                        </switch>
+                    </items>
+                    <connections>
+                        <outlet property="isAutoLockSwitch" destination="kI6-oq-BLc" id="IZ8-Uu-PKV"/>
+                        <outlet property="isHeatSessionSwitch" destination="3jc-Kt-KDm" id="dxA-eQ-GKB"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="216" y="630"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="AEw-b0-oYE">
+            <objects>
+                <notificationController id="YCC-NB-fut">
+                    <items>
+                        <label alignment="left" text="Alert Label" id="IdU-wH-bcW"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
+                        <segue destination="4sK-HA-Art" kind="relationship" relationship="dynamicNotificationInterface" id="kXh-Jw-8B1"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="-12" y="924"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="ZPc-GJ-vnh">
+            <objects>
+                <controller id="4sK-HA-Art" customClass="NotificationController" customModule="SurfingGoWatchApp" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="220" y="924"/>
+        </scene>
+    </scenes>
+</document>
