@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mSe-5K-ibf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mSe-5K-ibf">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -442,14 +442,13 @@
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="onDetailButton:" destination="aIa-4p-hJl" eventType="touchUpInside" id="Aby-9h-Mqi"/>
-                                                    <segue destination="uec-UQ-thK" kind="push" identifier="showWaveMapVCSegue" id="HQ8-LZ-wq6"/>
+                                                    <segue destination="uec-UQ-thK" kind="show" identifier="showWaveMapVCSegue" id="HQ8-LZ-wq6"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="メモ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oys-iV-LXJ">
                                                 <rect key="frame" x="0.0" y="460" width="35" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -480,7 +479,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="psG-yl-IW4"/>
                     </view>
-                    <navigationItem key="navigationItem" id="bkb-ar-6Xm"/>
+                    <navigationItem key="navigationItem" id="bkb-ar-6Xm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="4zz-oW-pt4">
+                            <connections>
+                                <action selector="onEdit:" destination="aIa-4p-hJl" id="exA-gK-pwW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="averageSpeedLabel" destination="ksD-VO-ol9" id="acA-dY-ekC"/>
                         <outlet property="contentScrollView" destination="m5b-hb-Tgh" id="B8s-fV-N5R"/>

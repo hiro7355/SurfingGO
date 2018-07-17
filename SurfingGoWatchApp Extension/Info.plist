@@ -2,16 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSHealthShareUsageDescription</key>
-    <string>サーフィン中のワークアウト情報を記録します</string>
-    <key>NSHealthUpdateUsageDescription</key>
-    <string>サーフィン中のワークアウト情報を記録します</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>サーフィン中の位置情報を記録します</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>サーフィン中の位置情報を記録します</string>
-    <key>NSLocationUsageDescription</key>
-    <string>サーフィン中の位置情報を記録します</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -29,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -39,6 +29,28 @@
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
+	</dict>
+	<key>NSHealthShareUsageDescription</key>
+	<string>サーフィン中のワークアウト情報を記録します</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>サーフィン中のワークアウト情報を記録します</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>サーフィン中の位置情報を記録します</string>
+	<key>NSLocationUsageDescription</key>
+	<string>サーフィン中の位置情報を記録します</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>サーフィン中の位置情報を記録します</string>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.jp.co.ikaika.SurfingGo</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>SurfingGo</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -50,18 +62,5 @@
 	</array>
 	<key>WKExtensionDelegateClassName</key>
 	<string>$(PRODUCT_MODULE_NAME).ExtensionDelegate</string>
-    <key>NSUbiquitousContainers</key>
-    <dict>
-        <key>iCloud.jp.co.ikaika.SurfingGo</key>
-        <dict>
-            <key>NSUbiquitousContainerIsDocumentScopePublic</key>
-            <true/>
-            <key>NSUbiquitousContainerSupportedFolderLevels</key>
-            <string>Any</string>
-            <key>NSUbiquitousContainerName</key>
-            <string>SurfingGo</string>
-        </dict>
-    </dict>
 </dict>
-
 </plist>

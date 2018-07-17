@@ -9,19 +9,32 @@
 import Foundation
 import CoreLocation
 
+extension CLPlacemark {
+
+    func pointName() -> String? {
+        return validName([self.subLocality, self.locality])
+    }
+    
+    func validName(_ names: [String?]) -> String? {
+        for name in names {
+            if name != nil {
+                return name
+            }
+        }
+        return nil
+    }
+}
+
 class GeoUtils {
 
     static func address(latitude : Double, longitude : Double,  completion: ((String?, CLPlacemark?) -> Void)?) -> Void {
-        
         let location : CLLocation = CLLocation(latitude: latitude, longitude: longitude)
         
         GeoUtils.address(fromLocation: location, completion: completion)
-        
     }
 
     
     static func address(fromLocation location : CLLocation, completion: ((String?, CLPlacemark?) -> Void)?) -> Void {
-        
         // 住所取得
         CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(pms, error)->Void in
             if error != nil {

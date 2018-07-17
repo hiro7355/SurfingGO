@@ -22,7 +22,6 @@ extension UIViewController {
         return self
     }
     
-    
     static func topViewController() -> UIViewController? {
         return UIApplication.shared.keyWindow?.rootViewController?.currentTopViewController
     }

@@ -5,10 +5,8 @@
 //  Created by 野澤 通弘 on 2017/10/25.
 //  Copyright © 2017年 ikaika software. All rights reserved.
 //
-
 import UIKit
 import Eureka
-
 
 final class TitleImageTableViewCell: Cell<TitleImage>, CellType, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var imageLabel: UIImageView!
@@ -47,21 +45,15 @@ final class TitleImageTableViewCell: Cell<TitleImage>, CellType, UIPickerViewDat
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
+
     override func update() {
         super.update()
         
-        // we do not want to show the default UITableViewCell's textLabel
-//        textLabel?.text = nil
-        
-        // get the value from our row
         guard let value = row.value else { return }
 
         self.imageLabel.image = value.image
@@ -80,30 +72,6 @@ final class TitleImageTableViewCell: Cell<TitleImage>, CellType, UIPickerViewDat
         }
     }
     
-    /*
-    open override func update() {
-        super.update()
-        selectionStyle = row.isDisabled ? .none : .default
-        
-        if row.title?.isEmpty == false {
-            detailTextLabel?.text = row.displayValueFor?(row.value) ?? (row as? NoValueDisplayTextConformance)?.noValueDisplayText
-        } else {
-            textLabel?.text = row.displayValueFor?(row.value) ?? (row as? NoValueDisplayTextConformance)?.noValueDisplayText
-            detailTextLabel?.text = nil
-        }
-        
-        textLabel?.textColor = row.isDisabled ? .gray : .black
-        if row.isHighlighted {
-            textLabel?.textColor = tintColor
-        }
-        
-        picker.reloadAllComponents()
-        if let selectedValue = pickerInputRow?.value, let index = pickerInputRow?.options.index(of: selectedValue) {
-            picker.selectRow(index, inComponent: 0, animated: true)
-        }
-        
-    }
-     */
     open override func didSelect() {
         super.didSelect()
         row.deselect()
@@ -129,11 +97,6 @@ final class TitleImageTableViewCell: Cell<TitleImage>, CellType, UIPickerViewDat
         return pickerInputRow?.options.count ?? 0
     }
     
-    /*
-    open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerInputRow?.displayValueFor?(pickerInputRow?.options[row])
-    }
-    */
     open func pickerView(_ pickerView: UIPickerView, didSelectRow rowNumber: Int, inComponent component: Int) {
         if let picker = pickerInputRow, picker.options.count > rowNumber {
             picker.value = picker.options[rowNumber]
@@ -143,22 +106,15 @@ final class TitleImageTableViewCell: Cell<TitleImage>, CellType, UIPickerViewDat
     open func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         return UIImageView(image: self.pickerInputRow?.options[row].image)
     }
-
-    
 }
-
-
 
 final class TitleImagePickerRow: Row<TitleImageTableViewCell>, NoValueDisplayTextConformance, RowType {
     var noValueDisplayText: String?
     
     var options = [TitleImage]()
 
-//final class TitleImagePickerRow: _PickerInputRow<TitleImage>, RowType  {
     required init(tag: String?) {
         super.init(tag: tag)
         cellProvider = CellProvider<TitleImageTableViewCell>(nibName: "TitleImageTableViewCell")
     }
-    
-    
 }

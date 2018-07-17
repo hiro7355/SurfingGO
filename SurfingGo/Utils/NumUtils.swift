@@ -30,4 +30,7 @@ class NumUtils {
     static func kph(fromMps : Double) -> Double {
         return NumUtils.value1(forDoubleValue: (fromMps * 3.6))
     }
+    static func mps(fromKph : Double) -> Double {
+        return fromKph / 3.6
+    }
 }

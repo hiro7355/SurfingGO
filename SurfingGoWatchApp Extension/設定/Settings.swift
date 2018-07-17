@@ -12,7 +12,6 @@ class Settings {
     static let KEY_HEATSESSION : String = "HeatSession"
     static let KEY_AUTOLOCK : String = "AutoLock"
     static let KEY_HEATTIME : String = "HeatTime"
-
     static let KEY_LASTSESSION_STATEDAT : String = "LSStartedAt"
     static let KEY_LASTSESSION_TIME : String = "LSTime"
     static let KEY_LASTSESSION_WAVECOUNT : String = "LSWaveCount"
@@ -20,9 +19,7 @@ class Settings {
     static let KEY_LASTSESSION_TOPSPEED : String = "LSTopSpeed"
     static let KEY_LASTSESSION_TOTALDISTANCE : String = "LSTotalDistance"
 
-    
     static func setUserDefault(value : Any, forKey : String) {
-        
         // インスタンス生成
         let defaults = UserDefaults.standard
         
@@ -42,11 +39,8 @@ class Settings {
         } else {
             return defaultValue
         }
-        
     }
 
-    
-    
     static func isAutoLock() -> Bool {
         return Settings.valueOfUserDefault(forKey: KEY_AUTOLOCK, defaultValue: false) as! Bool
     }
@@ -69,7 +63,6 @@ class Settings {
     }
     static func setHeatTime(value : Int) -> Void {
         Settings.setUserDefault(value: value, forKey: KEY_HEATTIME)
-        
     }
 
     //  最後のセッションの開始日時
@@ -83,7 +76,6 @@ class Settings {
     }
     static func setLastSessionStatedAt(value : Date) -> Void {
         Settings.setUserDefault(value: value.timeIntervalSince1970, forKey: KEY_LASTSESSION_STATEDAT)
-        
     }
 
     //  最後のセッションの時間（秒）
@@ -124,17 +116,11 @@ class Settings {
     }
     
     static func setLastSession(result : WaveSession) {
-        
         Settings.setLastSessionStatedAt(value: result.startedAt)
-        
         Settings.setLastSessionTime(value: Int(result.time))
-        
         Settings.setLastSessionTopSpeed(value: result.topSpeed)
-        
         Settings.setLastSessionWaveCount(value: result.waves.count)
-        
         Settings.setLastSessionTotalDistance(value: result.totalDistance)
-        
         Settings.setLastSessionLongestDistance(value: result.longestDistance)
     }
 }

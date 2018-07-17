@@ -46,30 +46,23 @@ class DateUtils {
     }
 
     static func weakDayString(forDate date: Date) -> String {
-        var calendar = Calendar.current
-        
+        let calendar = Calendar.current
         let weekday = calendar.component(.weekday, from: date)
-        
         return calendar.standaloneWeekdaySymbols[weekday - 1]
     }
 
-    //
     //  00:00:00にします
-    //
     static func startOfDay(for date : Date) -> Date {
         let calendar = Calendar(identifier: .gregorian)
         return calendar.startOfDay(for: date)
     }
     
-    //
     //  月初の00:00:00にします
-    //
     static func startOfMonth(for date : Date) -> Date {
         let calendar = Calendar.current
         // 月初
         let comps = calendar.dateComponents([.year, .month], from: date)
         let firstday : Date = calendar.date(from: comps)!
-
         return firstday
     }
     
@@ -77,20 +70,17 @@ class DateUtils {
         // 翌月
         let add = DateComponents(month: 1, day: 0)
         return Calendar.current.date(byAdding: add, to: date)!
-
     }
     static func preMonth(for date : Date) -> Date {
         // 前月
         let add = DateComponents(month: -1, day: 0)
         return Calendar.current.date(byAdding: add, to: date)!
-        
     }
 
     static func preYear(for date : Date) -> Date {
         // 前年
         let add = DateComponents(month: -12, day: 0)
         return Calendar.current.date(byAdding: add, to: date)!
-        
     }
 
     static func addTime(for date : Date, second: Int) -> Date {
@@ -99,20 +89,38 @@ class DateUtils {
     }
     
     static func weakDayString(for date: Date) -> String {
-        var calendar = Calendar.current
-        
+        let calendar = Calendar.current
         let weekday = calendar.component(.weekday, from: date)
-        
         return calendar.standaloneWeekdaySymbols[weekday - 1]
     }
     
     //  日付の差を取得します
     static func dayInterval(fromDate : Date , toDate: Date) -> Int {
-        
         let from = DateUtils.startOfDay(for: toDate) as NSDate
         let timeInterval = from.timeIntervalSince(DateUtils.startOfDay(for: fromDate) )
-        
         return Int(timeInterval/60/60/24)
     }
 
+    //  1月1日0時0分0秒を返します
+    static func startDateOfYear(year: Int) -> Date {
+        var comp = DateComponents()
+        comp.year = year
+        comp.month = 1
+        comp.day = 1
+        comp.hour = 0
+        comp.minute = 0
+        comp.second = 0
+        return Calendar.current.date(from: comp)!
+    }
+    // 12月31日23時59分59秒を返します
+    static func endDateOfYear(year: Int) -> Date {
+        var comp = DateComponents()
+        comp.year = year
+        comp.month = 12
+        comp.day = 31
+        comp.hour = 23
+        comp.minute = 59
+        comp.second = 59
+        return Calendar.current.date(from: comp)!
+    }
 }

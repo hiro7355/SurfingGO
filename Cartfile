@@ -1,0 +1,6 @@
+github "SVProgressHUD/SVProgressHUD"
+github "realm/realm-cocoa"
+github "Constantine-Fry/rebekka"
+github "xmartlabs/Eureka" ~> 4.0
+github "danielgindi/Charts" ~> 3.0.4
+github "yaslab/CSV.swift" ~> 2.1.0

@@ -15,6 +15,19 @@
 		06317EDA1F9AE50200BB96F9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06317ED91F9AE50200BB96F9 /* SettingViewController.swift */; };
 		063300761FA07D03008FC800 /* TitleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063300751FA07D03008FC800 /* TitleImage.swift */; };
 		063300771FA07D03008FC800 /* TitleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063300751FA07D03008FC800 /* TitleImage.swift */; };
+		063E53691FE0FBD5001FCA6C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E53631FE0FBD5001FCA6C /* RealmSwift.framework */; };
+		063E536A1FE0FBD5001FCA6C /* Eureka.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E53641FE0FBD5001FCA6C /* Eureka.framework */; };
+		063E536B1FE0FBD5001FCA6C /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E53651FE0FBD5001FCA6C /* Charts.framework */; };
+		063E536C1FE0FBD5001FCA6C /* CSV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E53661FE0FBD5001FCA6C /* CSV.framework */; };
+		063E536D1FE0FBD5001FCA6C /* SVProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E53671FE0FBD5001FCA6C /* SVProgressHUD.framework */; };
+		063E536E1FE0FBD5001FCA6C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E53681FE0FBD5001FCA6C /* Realm.framework */; };
+		063E53711FE0FBF1001FCA6C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E536F1FE0FBF1001FCA6C /* Realm.framework */; };
+		063E53721FE0FBF1001FCA6C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E53701FE0FBF1001FCA6C /* RealmSwift.framework */; };
+		063E53731FE0FE7F001FCA6C /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E536F1FE0FBF1001FCA6C /* Realm.framework */; };
+		063E53741FE0FE83001FCA6C /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 063E53701FE0FBF1001FCA6C /* RealmSwift.framework */; };
+		0651DCBB204FDDD300D52DE5 /* GeoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C488AC1F94A4B9007C0C45 /* GeoUtils.swift */; };
+		0651DCBD2051032C00D52DE5 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0651DCBC2051032C00D52DE5 /* Date+Ext.swift */; };
+		0651DCBF2051063B00D52DE5 /* ArrayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0651DCBE2051063B00D52DE5 /* ArrayUtils.swift */; };
 		0654BFEA1F9E02D800F828A1 /* AlertViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0654BFE91F9E02D800F828A1 /* AlertViewUtils.swift */; };
 		0654BFED1F9EEE0100F828A1 /* SessionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0654BFEC1F9EEE0100F828A1 /* SessionDetailViewController.swift */; };
 		066F1A921F8B85FC0006C958 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066F1A911F8B85FC0006C958 /* Location.swift */; };
@@ -85,11 +98,6 @@
 		06EAAE251F975B4C00734E48 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066F1A911F8B85FC0006C958 /* Location.swift */; };
 		06EAAE261F975B4F00734E48 /* SurfPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C488A91F949980007C0C45 /* SurfPoint.swift */; };
 		06F5FB7F1FC9000400A71AE9 /* test_1114.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06F5FB7E1FC9000400A71AE9 /* test_1114.txt */; };
-		34F749E0BBB34B8E566047FE /* Pods_SurfingGoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FFB96F36847A2316A766B77 /* Pods_SurfingGoTests.framework */; };
-		82C31C8347A9A2894A54DD62 /* Pods_SurfingGo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2CEC6084D4F8E890E588978 /* Pods_SurfingGo.framework */; };
-		96ABA5ABA242C0362E1F41AC /* Pods_SurfingGoWatchApp_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9371B1044CBA4BF9CB665F0 /* Pods_SurfingGoWatchApp_Extension.framework */; };
-		9F67444A81403977C8E950C9 /* Pods_SurfingGoWatchApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F8575C1862E2D59AFCAD4D /* Pods_SurfingGoWatchApp.framework */; };
-		D9B090E51EAA8A107A520D44 /* Pods_SurfingGoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AB41309BA74B9CCE87247E6 /* Pods_SurfingGoUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +164,16 @@
 		06307DAA1FA04C92003FDABA /* TitleImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleImageTableViewCell.xib; sourceTree = "<group>"; };
 		06317ED91F9AE50200BB96F9 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		063300751FA07D03008FC800 /* TitleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleImage.swift; sourceTree = "<group>"; };
+		063E53631FE0FBD5001FCA6C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
+		063E53641FE0FBD5001FCA6C /* Eureka.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eureka.framework; path = Carthage/Build/iOS/Eureka.framework; sourceTree = "<group>"; };
+		063E53651FE0FBD5001FCA6C /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
+		063E53661FE0FBD5001FCA6C /* CSV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CSV.framework; path = Carthage/Build/iOS/CSV.framework; sourceTree = "<group>"; };
+		063E53671FE0FBD5001FCA6C /* SVProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SVProgressHUD.framework; path = Carthage/Build/iOS/SVProgressHUD.framework; sourceTree = "<group>"; };
+		063E53681FE0FBD5001FCA6C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		063E536F1FE0FBF1001FCA6C /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/watchOS/Realm.framework; sourceTree = "<group>"; };
+		063E53701FE0FBF1001FCA6C /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/watchOS/RealmSwift.framework; sourceTree = "<group>"; };
+		0651DCBC2051032C00D52DE5 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		0651DCBE2051063B00D52DE5 /* ArrayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayUtils.swift; sourceTree = "<group>"; };
 		0654BFE91F9E02D800F828A1 /* AlertViewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewUtils.swift; sourceTree = "<group>"; };
 		0654BFEC1F9EEE0100F828A1 /* SessionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailViewController.swift; sourceTree = "<group>"; };
 		066F1A911F8B85FC0006C958 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -230,21 +248,6 @@
 		06EAAE1D1F96E81900734E48 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		06EAAE1F1F96FFBC00734E48 /* ResultInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultInterfaceController.swift; sourceTree = "<group>"; };
 		06F5FB7E1FC9000400A71AE9 /* test_1114.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test_1114.txt; path = work/test_1114.txt; sourceTree = SOURCE_ROOT; };
-		33B7DECD171013E725E1CF88 /* Pods-SurfingGoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGoTests/Pods-SurfingGoTests.release.xcconfig"; sourceTree = "<group>"; };
-		3E3B6B44C80FD22CD4CB3F13 /* Pods-SurfingGo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGo.release.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGo/Pods-SurfingGo.release.xcconfig"; sourceTree = "<group>"; };
-		473E500183D1782AB612CF21 /* Pods-SurfingGoWatchApp Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGoWatchApp Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGoWatchApp Extension/Pods-SurfingGoWatchApp Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		4C23BECE6FB96F23DEE0ECA3 /* Pods-SurfingGoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGoTests/Pods-SurfingGoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		7AB41309BA74B9CCE87247E6 /* Pods_SurfingGoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfingGoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		89FB0167F5493440723C9083 /* Pods-SurfingGoWatchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGoWatchApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGoWatchApp/Pods-SurfingGoWatchApp.release.xcconfig"; sourceTree = "<group>"; };
-		8F9D08B25774C40FAAAE9D50 /* Pods-SurfingGo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGo/Pods-SurfingGo.debug.xcconfig"; sourceTree = "<group>"; };
-		8FFB96F36847A2316A766B77 /* Pods_SurfingGoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfingGoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		96C8B991B4DED0A04D65AD87 /* Pods-SurfingGoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGoUITests/Pods-SurfingGoUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		9CF9D669BC1043AC5B5DE59E /* Pods-SurfingGoWatchApp Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGoWatchApp Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGoWatchApp Extension/Pods-SurfingGoWatchApp Extension.release.xcconfig"; sourceTree = "<group>"; };
-		A2CEC6084D4F8E890E588978 /* Pods_SurfingGo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfingGo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C3F8575C1862E2D59AFCAD4D /* Pods_SurfingGoWatchApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfingGoWatchApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0B660AB6F052F5D43E9EF9E /* Pods-SurfingGoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGoUITests/Pods-SurfingGoUITests.release.xcconfig"; sourceTree = "<group>"; };
-		D1A41F7BCE4BDD455359A4A1 /* Pods-SurfingGoWatchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SurfingGoWatchApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SurfingGoWatchApp/Pods-SurfingGoWatchApp.debug.xcconfig"; sourceTree = "<group>"; };
-		E9371B1044CBA4BF9CB665F0 /* Pods_SurfingGoWatchApp_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SurfingGoWatchApp_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,12 +255,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				063E536C1FE0FBD5001FCA6C /* CSV.framework in Frameworks */,
 				066F1AA11F8D97980006C958 /* MapKit.framework in Frameworks */,
+				063E536B1FE0FBD5001FCA6C /* Charts.framework in Frameworks */,
+				063E536A1FE0FBD5001FCA6C /* Eureka.framework in Frameworks */,
 				06B44EB91F87AE5F00D2F5CB /* CoreLocation.framework in Frameworks */,
+				063E53691FE0FBD5001FCA6C /* RealmSwift.framework in Frameworks */,
+				063E536D1FE0FBD5001FCA6C /* SVProgressHUD.framework in Frameworks */,
 				0612BC761F7BB5F400A86183 /* WatchConnectivity.framework in Frameworks */,
 				06A3BBD51F7A395C000A7834 /* HealthKit.framework in Frameworks */,
 				0612BC721F7BA2C200A86183 /* CloudKit.framework in Frameworks */,
-				82C31C8347A9A2894A54DD62 /* Pods_SurfingGo.framework in Frameworks */,
+				063E536E1FE0FBD5001FCA6C /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +273,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34F749E0BBB34B8E566047FE /* Pods_SurfingGoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,7 +280,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9B090E51EAA8A107A520D44 /* Pods_SurfingGoUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,12 +287,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				063E53711FE0FBF1001FCA6C /* Realm.framework in Frameworks */,
 				06C4EC021F7FBB6C00524216 /* CoreMotion.framework in Frameworks */,
+				063E53721FE0FBF1001FCA6C /* RealmSwift.framework in Frameworks */,
 				0612BC741F7BB5E300A86183 /* WatchConnectivity.framework in Frameworks */,
 				06B5EBAA1F7B6EBA0028289C /* CloudKit.framework in Frameworks */,
 				06B5EBA21F7B399F0028289C /* CoreLocation.framework in Frameworks */,
 				06B5EB9F1F7A70400028289C /* HealthKit.framework in Frameworks */,
-				96ABA5ABA242C0362E1F41AC /* Pods_SurfingGoWatchApp_Extension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +301,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F67444A81403977C8E950C9 /* Pods_SurfingGoWatchApp.framework in Frameworks */,
+				063E53741FE0FE83001FCA6C /* RealmSwift.framework in Frameworks */,
+				063E53731FE0FE7F001FCA6C /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,7 +346,6 @@
 				06A3BBBC1F7A3915000A7834 /* SurfingGoWatchApp Extension */,
 				06A3BB7A1F7A38CC000A7834 /* Products */,
 				06A3BBD31F7A395C000A7834 /* Frameworks */,
-				D6ACF6C0BDCEC2E042428A38 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -433,6 +440,14 @@
 		06A3BBD31F7A395C000A7834 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				063E536F1FE0FBF1001FCA6C /* Realm.framework */,
+				063E53701FE0FBF1001FCA6C /* RealmSwift.framework */,
+				063E53651FE0FBD5001FCA6C /* Charts.framework */,
+				063E53661FE0FBD5001FCA6C /* CSV.framework */,
+				063E53641FE0FBD5001FCA6C /* Eureka.framework */,
+				063E53681FE0FBD5001FCA6C /* Realm.framework */,
+				063E53631FE0FBD5001FCA6C /* RealmSwift.framework */,
+				063E53671FE0FBD5001FCA6C /* SVProgressHUD.framework */,
 				066F1AA01F8D97970006C958 /* MapKit.framework */,
 				06B44EB81F87AE5F00D2F5CB /* CoreLocation.framework */,
 				06C4EC011F7FBB6B00524216 /* CoreMotion.framework */,
@@ -443,11 +458,6 @@
 				06B5EBA11F7B399F0028289C /* CoreLocation.framework */,
 				06B5EB9E1F7A70400028289C /* HealthKit.framework */,
 				06A3BBD41F7A395C000A7834 /* HealthKit.framework */,
-				A2CEC6084D4F8E890E588978 /* Pods_SurfingGo.framework */,
-				8FFB96F36847A2316A766B77 /* Pods_SurfingGoTests.framework */,
-				7AB41309BA74B9CCE87247E6 /* Pods_SurfingGoUITests.framework */,
-				C3F8575C1862E2D59AFCAD4D /* Pods_SurfingGoWatchApp.framework */,
-				E9371B1044CBA4BF9CB665F0 /* Pods_SurfingGoWatchApp_Extension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -527,6 +537,7 @@
 				06D4E4941F91AC5F0060876A /* MKPolyline+Ext.swift */,
 				06D4E4961F91AE420060876A /* RidingPolyline.swift */,
 				06D241561FB5421100EAFC25 /* UIViewControllerExtension.swift */,
+				0651DCBC2051032C00D52DE5 /* Date+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -560,6 +571,7 @@
 				06D4E4A11F93344B0060876A /* NumUtils.swift */,
 				06C488AC1F94A4B9007C0C45 /* GeoUtils.swift */,
 				0654BFE91F9E02D800F828A1 /* AlertViewUtils.swift */,
+				0651DCBE2051063B00D52DE5 /* ArrayUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -572,23 +584,6 @@
 			path = "設定";
 			sourceTree = "<group>";
 		};
-		D6ACF6C0BDCEC2E042428A38 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8F9D08B25774C40FAAAE9D50 /* Pods-SurfingGo.debug.xcconfig */,
-				3E3B6B44C80FD22CD4CB3F13 /* Pods-SurfingGo.release.xcconfig */,
-				4C23BECE6FB96F23DEE0ECA3 /* Pods-SurfingGoTests.debug.xcconfig */,
-				33B7DECD171013E725E1CF88 /* Pods-SurfingGoTests.release.xcconfig */,
-				96C8B991B4DED0A04D65AD87 /* Pods-SurfingGoUITests.debug.xcconfig */,
-				D0B660AB6F052F5D43E9EF9E /* Pods-SurfingGoUITests.release.xcconfig */,
-				D1A41F7BCE4BDD455359A4A1 /* Pods-SurfingGoWatchApp.debug.xcconfig */,
-				89FB0167F5493440723C9083 /* Pods-SurfingGoWatchApp.release.xcconfig */,
-				473E500183D1782AB612CF21 /* Pods-SurfingGoWatchApp Extension.debug.xcconfig */,
-				9CF9D669BC1043AC5B5DE59E /* Pods-SurfingGoWatchApp Extension.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -596,13 +591,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06A3BBA11F7A38CD000A7834 /* Build configuration list for PBXNativeTarget "SurfingGo" */;
 			buildPhases = (
-				A2FBE1B8A1EF92A3EE78F2F7 /* [CP] Check Pods Manifest.lock */,
 				06A3BB751F7A38CC000A7834 /* Sources */,
 				06A3BB761F7A38CC000A7834 /* Frameworks */,
 				06A3BB771F7A38CC000A7834 /* Resources */,
 				06A3BBD11F7A3915000A7834 /* Embed Watch Content */,
-				8839D14B564CF0D332376DDB /* [CP] Embed Pods Frameworks */,
-				D1180FF735C7C060E697740E /* [CP] Copy Pods Resources */,
+				063E53751FE0FF9B001FCA6C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -618,12 +611,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06A3BBA41F7A38CD000A7834 /* Build configuration list for PBXNativeTarget "SurfingGoTests" */;
 			buildPhases = (
-				4C6BDFAE9434C918E4CC759C /* [CP] Check Pods Manifest.lock */,
 				06A3BB891F7A38CD000A7834 /* Sources */,
 				06A3BB8A1F7A38CD000A7834 /* Frameworks */,
 				06A3BB8B1F7A38CD000A7834 /* Resources */,
-				62B218265764D1790089DB46 /* [CP] Embed Pods Frameworks */,
-				F63D7DB83A01C44DD830D431 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -639,12 +629,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06A3BBA71F7A38CD000A7834 /* Build configuration list for PBXNativeTarget "SurfingGoUITests" */;
 			buildPhases = (
-				464BC778A75D8A58C247EA90 /* [CP] Check Pods Manifest.lock */,
 				06A3BB941F7A38CD000A7834 /* Sources */,
 				06A3BB951F7A38CD000A7834 /* Frameworks */,
 				06A3BB961F7A38CD000A7834 /* Resources */,
-				C8DD5BC702B61C712C8CCC16 /* [CP] Embed Pods Frameworks */,
-				9E11029C25BE470BE3FB01A2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -660,11 +647,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06A3BBCE1F7A3915000A7834 /* Build configuration list for PBXNativeTarget "SurfingGoWatchApp" */;
 			buildPhases = (
-				FE0E5A3B15E1180A426579D7 /* [CP] Check Pods Manifest.lock */,
 				06A3BBAA1F7A3914000A7834 /* Resources */,
 				06A3BBCD1F7A3915000A7834 /* Embed App Extensions */,
 				A380FA63D18090F9CB58F201 /* Frameworks */,
-				8C382539D2F2ED8DB81ECFCC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -680,12 +665,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06A3BBCA1F7A3915000A7834 /* Build configuration list for PBXNativeTarget "SurfingGoWatchApp Extension" */;
 			buildPhases = (
-				684B7890CBB482F07ED3254E /* [CP] Check Pods Manifest.lock */,
 				06A3BBB41F7A3915000A7834 /* Sources */,
 				06A3BBB51F7A3915000A7834 /* Frameworks */,
 				06A3BBB61F7A3915000A7834 /* Resources */,
-				847E3DFFE84F21251FF3C1AE /* [CP] Embed Pods Frameworks */,
-				AE3945DC89DFDF114C862A90 /* [CP] Copy Pods Resources */,
+				063E53761FE10038001FCA6C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -733,7 +716,7 @@
 					};
 					06A3BBAB1F7A3914000A7834 = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					06A3BBB71F7A3915000A7834 = {
 						CreatedOnToolsVersion = 9.0;
@@ -827,248 +810,39 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		464BC778A75D8A58C247EA90 /* [CP] Check Pods Manifest.lock */ = {
+		063E53751FE0FF9B001FCA6C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/iOS/SVProgressHUD.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CSV.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Eureka.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SurfingGoUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
-		4C6BDFAE9434C918E4CC759C /* [CP] Check Pods Manifest.lock */ = {
+		063E53761FE10038001FCA6C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/watchOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/watchOS/RealmSwift.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SurfingGoTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		62B218265764D1790089DB46 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGoTests/Pods-SurfingGoTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		684B7890CBB482F07ED3254E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SurfingGoWatchApp Extension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		847E3DFFE84F21251FF3C1AE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGoWatchApp Extension/Pods-SurfingGoWatchApp Extension-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Realm-watchOS/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift-watchOS/RealmSwift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGoWatchApp Extension/Pods-SurfingGoWatchApp Extension-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8839D14B564CF0D332376DDB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGo/Pods-SurfingGo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CSV.swift/CSV.framework",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm-iOS/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift-iOS/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/rebekka/rebekka.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CSV.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/rebekka.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGo/Pods-SurfingGo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8C382539D2F2ED8DB81ECFCC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGoWatchApp/Pods-SurfingGoWatchApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9E11029C25BE470BE3FB01A2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGoUITests/Pods-SurfingGoUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A2FBE1B8A1EF92A3EE78F2F7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SurfingGo-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AE3945DC89DFDF114C862A90 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGoWatchApp Extension/Pods-SurfingGoWatchApp Extension-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C8DD5BC702B61C712C8CCC16 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGoUITests/Pods-SurfingGoUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D1180FF735C7C060E697740E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGo/Pods-SurfingGo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F63D7DB83A01C44DD830D431 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SurfingGoTests/Pods-SurfingGoTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FE0E5A3B15E1180A426579D7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SurfingGoWatchApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1080,6 +854,7 @@
 				06D4E49B1F91D0C90060876A /* AggregateChartViewController.swift in Sources */,
 				06D4E4971F91AE420060876A /* RidingPolyline.swift in Sources */,
 				06D241571FB5421100EAFC25 /* UIViewControllerExtension.swift in Sources */,
+				0651DCBD2051032C00D52DE5 /* Date+Ext.swift in Sources */,
 				06C4EBFF1F7DF93400524216 /* DateUtiles .swift in Sources */,
 				0654BFED1F9EEE0100F828A1 /* SessionDetailViewController.swift in Sources */,
 				06B44EBE1F888D7D00D2F5CB /* Wave.swift in Sources */,
@@ -1095,6 +870,7 @@
 				0654BFEA1F9E02D800F828A1 /* AlertViewUtils.swift in Sources */,
 				06A3BB7D1F7A38CC000A7834 /* AppDelegate.swift in Sources */,
 				06B44EBB1F886A2200D2F5CB /* WaveSession.swift in Sources */,
+				0651DCBF2051063B00D52DE5 /* ArrayUtils.swift in Sources */,
 				066F1A9F1F8D8EA20006C958 /* WaveMapViewController.swift in Sources */,
 				06E8E4861F8F08E6002928E4 /* SurfBoardSettingViewController.swift in Sources */,
 				063300761FA07D03008FC800 /* TitleImage.swift in Sources */,
@@ -1152,6 +928,7 @@
 				063300771FA07D03008FC800 /* TitleImage.swift in Sources */,
 				06B5EBA41F7B3B2C0028289C /* LocationManager.swift in Sources */,
 				06A3BBC01F7A3915000A7834 /* ExtensionDelegate.swift in Sources */,
+				0651DCBB204FDDD300D52DE5 /* GeoUtils.swift in Sources */,
 				06A3BBBE1F7A3915000A7834 /* InterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1318,7 +1095,6 @@
 		};
 		06A3BBA21F7A38CD000A7834 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F9D08B25774C40FAAAE9D50 /* Pods-SurfingGo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SurfingGo/SurfingGo.entitlements;
@@ -1327,21 +1103,21 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SurfingGo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.co.ikaika.SurfingGo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f4988d54-c936-457c-abb0-e62cc776b54a";
+				PROVISIONING_PROFILE = "4e76a636-427d-4d0a-b1bc-8a1b7731e0a1";
 				PROVISIONING_PROFILE_SPECIFIER = "SurfingGo dev profile";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		06A3BBA31F7A38CD000A7834 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3E3B6B44C80FD22CD4CB3F13 /* Pods-SurfingGo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SurfingGo/SurfingGo.entitlements;
@@ -1351,6 +1127,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SurfingGo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1359,13 +1136,12 @@
 				PROVISIONING_PROFILE = "4e0dae33-84ac-4dd1-9545-bb87e0e0720e";
 				PROVISIONING_PROFILE_SPECIFIER = "SurfingGo distribution profile";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		06A3BBA51F7A38CD000A7834 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C23BECE6FB96F23DEE0ECA3 /* Pods-SurfingGoTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1383,7 +1159,6 @@
 		};
 		06A3BBA61F7A38CD000A7834 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33B7DECD171013E725E1CF88 /* Pods-SurfingGoTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1401,7 +1176,6 @@
 		};
 		06A3BBA81F7A38CD000A7834 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96C8B991B4DED0A04D65AD87 /* Pods-SurfingGoUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1418,7 +1192,6 @@
 		};
 		06A3BBA91F7A38CD000A7834 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0B660AB6F052F5D43E9EF9E /* Pods-SurfingGoUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1435,7 +1208,6 @@
 		};
 		06A3BBCB1F7A3915000A7834 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 473E500183D1782AB612CF21 /* Pods-SurfingGoWatchApp Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_ENTITLEMENTS = "SurfingGoWatchApp Extension/SurfingGoWatchApp Extension.entitlements";
@@ -1450,7 +1222,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.co.ikaika.SurfingGo.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "ff449ba7-1f6c-43f7-b4c3-d3d9493c037a";
+				PROVISIONING_PROFILE = "0c750dcd-ea2d-4a64-9f13-3ef6326502a2";
 				PROVISIONING_PROFILE_SPECIFIER = "SurfingGo watchkitApp extension dev profile";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1462,7 +1234,6 @@
 		};
 		06A3BBCC1F7A3915000A7834 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9CF9D669BC1043AC5B5DE59E /* Pods-SurfingGoWatchApp Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_ENTITLEMENTS = "SurfingGoWatchApp Extension/SurfingGoWatchApp Extension.entitlements";
@@ -1489,18 +1260,22 @@
 		};
 		06A3BBCF1F7A3915000A7834 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1A41F7BCE4BDD455359A4A1 /* Pods-SurfingGoWatchApp.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = PWBJK4SLE8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
 				IBSC_MODULE = SurfingGoWatchApp_Extension;
 				INFOPLIST_FILE = SurfingGoWatchApp/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.co.ikaika.SurfingGo.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "4aa26a35-476a-48be-a2d2-b0dadc351480";
+				PROVISIONING_PROFILE_SPECIFIER = "ikaika apps for development";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -1511,18 +1286,22 @@
 		};
 		06A3BBD01F7A3915000A7834 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89FB0167F5493440723C9083 /* Pods-SurfingGoWatchApp.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = PWBJK4SLE8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
 				IBSC_MODULE = SurfingGoWatchApp_Extension;
 				INFOPLIST_FILE = SurfingGoWatchApp/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.co.ikaika.SurfingGo.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "5ed772f0-b68a-4722-ae63-9f553c3d7363";
+				PROVISIONING_PROFILE_SPECIFIER = "IKaIKa AppStore Profile";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;

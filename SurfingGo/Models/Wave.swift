@@ -5,11 +5,9 @@
 //  Created by 野澤 通弘 on 2017/10/07.
 //  Copyright © 2017年 ikaika software. All rights reserved.
 //
-
 import Foundation
 import CoreLocation
 import RealmSwift
-//import MapKit
 
 class Wave : Object {
     
@@ -21,18 +19,10 @@ class Wave : Object {
     @objc dynamic var averageSpeed : Double = 0     //  平均速度（単位秒速メートル）
     @objc dynamic var topSpeed : Double = 0         //  最高速度（単位秒速メートル）
 
-
-    
     var cllocations : [CLLocation] = []
     var tempLocations : [CLLocation] = []
 
-//    var mapOverlays : [MKAnnotation] = []
-    
-//    var number : Int?   //  削除されることもあるので、numberの情報はもたない。wavesのインデックスで判断すること
-    
-
     override func isEqual(_ object: Any?) -> Bool {
-    
         let obj = object as! Wave
         if self.startedAt == obj.startedAt && self.time == obj.time && self.distance == obj.distance && self.averageSpeed == obj.averageSpeed && self.topSpeed == obj.topSpeed {
             return true
@@ -42,9 +32,7 @@ class Wave : Object {
     }
     
     func addLocation(location : CLLocation) {
-        
         cllocations.append(location)
-        
     }
 
     func reset() {
@@ -53,24 +41,17 @@ class Wave : Object {
     }
     
     func addTempLocation(location : CLLocation) {
-        
         tempLocations.append(location)
-
     }
     
     func commitTempLocations(location : CLLocation) {
-        
         cllocations.append(contentsOf: tempLocations)
         cllocations.append(location)
-        
         tempLocations = []
     }
     
     func commit() {
-    
-
         if locationList.count == 0 {
-            
             //  Realmように位置情報を変換してリストに追加します
             for cllocation in cllocations {
                 // Realmのobjectに変換します
@@ -86,35 +67,21 @@ class Wave : Object {
     //  realmから取得したロケーション情報を CLLocationの配列に展開します
     //
     func loadToCLLocations() {
-        
-        
         if cllocations.count == 0 && locationList.count > 0 {
-            
             for location in locationList {
-                
                 let cllocation : CLLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), altitude: location.altitude, horizontalAccuracy : location.horizontalAccuracy, verticalAccuracy : location.verticalAccuracy, course: location.course, speed: location.speed, timestamp: location.timestamp)
-                
                 cllocations.append(cllocation)
-                
-                
             }
         }
-        
     }
     
     func toString() -> String {
-
         loadToCLLocations()
         
-        
         if cllocations.count >= 2 {
-            
             let lastLocation : CLLocation = cllocations.last!
-            
             let startLocation : CLLocation = cllocations.first!
-            
             let distance : Double = startLocation.distance(from: lastLocation)
-            
             let time : Double = lastLocation.timestamp.timeIntervalSince1970 - startLocation.timestamp.timeIntervalSince1970
             
             return "距離:\(distance)メートル 時間:\(time)秒 開始日時:\(startLocation.timestamp)"
@@ -129,7 +96,6 @@ class Wave : Object {
     //  平均スピードは、距離/ライディング時間
     //
     func calc() {
-        
         if cllocations.count >= 2 {
         
             let startLocation : CLLocation = cllocations.first!
@@ -159,7 +125,6 @@ class Wave : Object {
                     break
                 }
                 if cllocation != preLocation {
-                    
                     //  距離を求めます
                     distance = distance + cllocation.distance(from: preLocation)
                     
@@ -168,7 +133,6 @@ class Wave : Object {
                         topSpeed = cllocation.speed
                     }
                 }
-                
                 //  一つ前のロケーションを更新します
                 preLocation = cllocation
 
@@ -177,11 +141,6 @@ class Wave : Object {
             self.distance = distance
             self.topSpeed = topSpeed
             self.averageSpeed = distance / self.time
-            
-            
-            
-            
         }
-
     }
 }

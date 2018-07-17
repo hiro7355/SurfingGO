@@ -13,15 +13,10 @@ import RealmSwift
 class AggregateChartViewController: UIViewController, ChartViewDelegate, IAxisValueFormatter {
 
     let realm = try! Realm()
-
     var startedOn : Date!
     var endedOn : Date!
     var aggregateType : AggregateType!
-    
-    
     var dic = [String : Results<WaveSession>]()
-    
-    
     var xLabels : [String] = []
     var keyName : String = ""
     var xValues : [Int] = []
@@ -35,17 +30,11 @@ class AggregateChartViewController: UIViewController, ChartViewDelegate, IAxisVa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = UIColor.white
-        
         let startedAt : Date = self.startedOn
         let endedAt : Date = Date(timeInterval: 24*3600, since: self.endedOn)
-        
         self.waveSessionResuls = realm.objects(WaveSession.self).filter("startedAt >= %@ AND startedAt <= %@", startedAt, endedAt)
-
         var dataEntries : [BarChartDataEntry] = []
-
-
 
         switch self.aggregateType! {
         case .Point:  //  ポイント
@@ -55,7 +44,7 @@ class AggregateChartViewController: UIViewController, ChartViewDelegate, IAxisVa
         case .Surfboard:  //  サーフボード
             xLabels = SurfBoard.names(items: SurfBoard.surfBoardArray)
             xValues = SurfBoard.ids(items: SurfBoard.surfBoardArray)
-            keyName = "surfboard.id"
+            keyName = "surfBoard.id"
         case .WaveHeight:  //  サイズ
             xLabels = WaveSession.waveHeightTexts
             xValues = WaveSession.waveHeightValues
@@ -80,39 +69,27 @@ class AggregateChartViewController: UIViewController, ChartViewDelegate, IAxisVa
             xLabels = WaveSession.windWeightTexts
             xValues = WaveSession.windWeightValues
             keyName = "windWeight"
+        case .Year:  //  年度
+            xValues = self.years(from: self.startedOn, to: self.endedOn)
+            xLabels = ArrayUtils.intToStringArray(intValues: xValues)
+            keyName = "startedAt"
+        case .TopSpeed:  //  最高速度
+            xLabels = WaveSession.topSpeedTexts
+            xValues = WaveSession.topSpeedValues
+            keyName = "topSpeed"
+        case .LongestDistance:  //  最長距離
+            xLabels = WaveSession.longestDistanceTexts
+            xValues = WaveSession.longestDistanceValues
+            keyName = "longestDistance"
         }
         
-        self.title = AggregateSettingViewController.AggregateTypeNamesDict[self.aggregateType]! + "別の集計"
+        self.title = AggregateSettingViewController.AggregateTypeNamesDict[self.aggregateType]!
         
         for i in 0..<xLabels.count {
-            
-            let value = xValues[i]
-            
-            let count = self.waveSessionResuls.filter("\(keyName) = %@", value).count
-            
+            let count = self.filterredResults(xIndex: i).count
             dataEntries.append(BarChartDataEntry(x : Double(i), y : Double(count)))
-            
         }
 
-        /*
-        for (key,value) in WaveSession.waveHeightDic {
-            let count = waveSessionResuls.filter("waveHeight = %@", key).count
-            
-            dataEntries.append(BarChartDataEntry(x : Double(key), y : Double(count)))
-
-        }
-        */
-        /*
-        let keys = Array(WaveSession.waveHeightDic.keys)
-        for i in 0..<keys.count {
-            
-            let key = keys
-            let count = waveSessionResuls.filter("waveHeight = %@", keys[i]).count
-            
-            dataEntries.append(BarChartDataEntry(x : Double(i+1), y : Double(count)))
-            
-        }
- */
         // チャート情報にラベルとデータを設定
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "セッション数")
         let chartData = BarChartData(dataSet: chartDataSet)
@@ -124,62 +101,73 @@ class AggregateChartViewController: UIViewController, ChartViewDelegate, IAxisVa
         let barChartView = BarChartView(frame: rect)
         barChartView.xAxis.labelCount = xLabels.count
         barChartView.delegate = self
-        barChartView.xAxis.valueFormatter = self as! IAxisValueFormatter
-//        barChartView.xAxis.drawLabelsEnabled = true
- //       barChartView.xAxis.drawAxisLineEnabled = true
+        barChartView.xAxis.valueFormatter = self as IAxisValueFormatter
         // x軸のラベルをボトムに表示
         barChartView.xAxis.labelPosition = .bottom
         // グラフの棒をニョキッとアニメーションさせる
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
         // グラフのタイトル
-//        barChartView.chartDescription?.text = ""
         barChartView.drawValueAboveBarEnabled = true
-            // 軸のラベル(目盛)のフォント、テキストカラー
-   //     barChartView.xAxis.labelFont = UIFont.systemFont(ofSize: 10.0)
-   //     barChartView.xAxis.labelTextColor = UIColor.black
-        
-        // 軸の色、太さ
-   //     barChartView.xAxis.axisLineColor = UIColor.gray
-   //     barChartView.xAxis.axisLineWidth = CGFloat(0.5)
-
-
         // viewにチャートデータを設定
         barChartView.data = chartData
-        
 
         view.addSubview(barChartView)
     }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
+    //  棒グラフの一つを選択した時
+    //   セッション一覧画面を開きます
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        
         if let dataSet = chartView.data?.dataSets[highlight.dataSetIndex] {
-            
             let sliceIndex: Int = dataSet.entryIndex(entry: entry)
-            
-            let value = self.xValues[sliceIndex]
-            
-            let results = waveSessionResuls.filter("\(self.keyName) = %@", value)
-
+            let results = self.filterredResults(xIndex: sliceIndex)
             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             let vc = storyboard.instantiateViewController(withIdentifier: "sessionTableViewControllerId") as! SessionTableViewController
-            vc.waveSessionsBySections = WaveSession.loadWaveSessionsBySections(realm: realm, waveSessions : results)
+            vc.waveSessionsBySections = WaveSession.loadWaveSessionsBySections(waveSessions : results)
+            vc.title = self.xLabels[sliceIndex]     //  セッション一覧画面のタイトルがサーフポイント名などX軸タイトルになるように設定します
             self.navigationController?.pushViewController(vc as UIViewController, animated: true)
 
             print("bar index:\(sliceIndex)")
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    private func filterredResults(xIndex: Int) -> RealmSwift.Results<WaveSession> {
+        let value = self.xValues[xIndex]
+        if self.aggregateType == .Year {
+            return waveSessionResuls.filter("\(self.keyName) >= %@ AND \(self.keyName) <= %@", DateUtils.startDateOfYear(year: value), DateUtils.endDateOfYear(year: value))
+        } else if self.aggregateType == .TopSpeed  {
+            if xIndex >= (self.xValues.count - 1) {
+                return waveSessionResuls.filter("\(self.keyName) >= %@", NumUtils.mps(fromKph: Double(value)))
+            } else {
+                let nextValue = self.xValues[xIndex+1]
+                return waveSessionResuls.filter("\(self.keyName) >= %@ AND \(self.keyName) < %@", NumUtils.mps(fromKph: Double(value)), NumUtils.mps(fromKph: Double(nextValue)))
+            }
+        } else if self.aggregateType == .LongestDistance {
+            if xIndex >= (self.xValues.count - 1) {
+                return waveSessionResuls.filter("\(self.keyName) >= %@", value)
+            } else {
+                let nextValue = self.xValues[xIndex+1]
+                return waveSessionResuls.filter("\(self.keyName) >= %@ AND \(self.keyName) < %@", value, nextValue)
+            }
+        } else {
+            return waveSessionResuls.filter("\(self.keyName) = %@", value)
+        }
     }
-    */
-
+    
+    private func years(from: Date, to: Date) -> [Int] {
+        var years: [Int] = []
+        
+        if let startYear = from.year, let endYear = to.year {
+            
+            var year = startYear
+            while(year <= endYear) {
+                years.append(year)
+                year += 1
+            }
+        }
+        return years
+    }
 }

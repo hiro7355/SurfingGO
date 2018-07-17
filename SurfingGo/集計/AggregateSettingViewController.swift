@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import RealmSwift
 
 enum AggregateType : Int {
     case Point = 0  //  ポイント
@@ -18,17 +19,33 @@ enum AggregateType : Int {
     case WaveDirection = 5  //  うねりの向き
     case WindDirection = 6 //  風向き
     case WindWeight = 7 //  風の強さ
+    case Year = 8 //  年度
+    case TopSpeed = 9 //  最高速度
+    case LongestDistance = 10 //  最長距離
 }
 
 class AggregateSettingViewController: FormViewController {
 
     var startedOn : Date = Date()
     var endedOn : Date = Date()
-    var aggregateType : AggregateType = AggregateType.Point
+    var aggregateType : AggregateType = AggregateType.TopSpeed
     
     
-    static let AggregateTypeNamesDict : [AggregateType : String] = [AggregateType.Point : "サーフポイント", AggregateType.Surfboard :  "サーフボード", AggregateType.WaveHeight :  "波のサイズ" , AggregateType.Condition : "波質",  AggregateType.SatisfactionLevel : "満足度", AggregateType.WaveDirection : "うねりの向き", AggregateType.WindDirection : "風向き" ,  AggregateType.WindWeight : "風の強さ"]
-    
+    static let AggregateTypeNamesDict : [AggregateType : String] = [AggregateType.Point : "サーフポイント", AggregateType.Surfboard :  "サーフボード", AggregateType.WaveHeight :  "波のサイズ" , AggregateType.Condition : "波質",  AggregateType.SatisfactionLevel : "満足度", AggregateType.WaveDirection : "うねりの向き", AggregateType.WindDirection : "風向き" ,  AggregateType.WindWeight : "風の強さ",  AggregateType.Year : "年度",  AggregateType.TopSpeed : "最高速度",  AggregateType.LongestDistance : "最長距離"]
+    static let AggregateTypeNamesArray : [String] = [
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.TopSpeed]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.LongestDistance]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.Point]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.Surfboard]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.WaveHeight]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.Condition]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.SatisfactionLevel]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.WaveDirection]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.WindDirection]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.WindWeight]!,
+                                                     AggregateSettingViewController.AggregateTypeNamesDict[AggregateType.Year]!,
+                                                     ]
+
     
     static var dateFormat: DateFormatter = {
         let f = DateFormatter()
@@ -42,28 +59,28 @@ class AggregateSettingViewController: FormViewController {
         
         self.title = "集計設定"
         
-        self.startedOn = DateUtils.preYear(for: Date())
-        
-        // ボタン作成
-//        let doneButton:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(type(of: self).clickDoneButton))
-        //ナビゲーションバーの右側にボタン付与
-//        self.navigationItem.setRightBarButtonItems([doneButton], animated: true)
+        // 最初のセッションの日付を開始日に設定します
+        let realm = try! Realm()
+        if let waveSession = realm.objects(WaveSession.self).first {
+            self.startedOn = waveSession.startedAt
+        } else {
+            self.startedOn = DateUtils.preYear(for: Date())
+        }
         
         form +++ Section()
             <<< PickerInputRow<String>(){
                 $0.title = "集計対象"
-                $0.options = Array(type(of: self).AggregateTypeNamesDict.values)
+                $0.options = type(of: self).AggregateTypeNamesArray
                 $0.value = type(of: self).AggregateTypeNamesDict[self.aggregateType]
+                
                 }.onChange{ row in
                     let keys = (type(of: self).AggregateTypeNamesDict as NSDictionary).allKeys(for : row.value!)
                     self.aggregateType = keys[0] as! AggregateType
-//                    self.aggregateType = (type(of: self).AggregateTypeNamesDict as NSDictionary).allKeys(for : row.value!)[0] as! AggregateType
         }
 
         form +++ Section("集計期間")
             <<< DateRow(){
                 $0.title = "開始"
-              //  $0.dateFormatter = type(of: self).dateFormat
                 $0.minimumDate = type(of: self).dateFormat.date(from: "1900/01/01") ?? Date()
                 $0.maximumDate = Date()
                 $0.value = self.startedOn
@@ -73,7 +90,6 @@ class AggregateSettingViewController: FormViewController {
             }
             <<< DateRow(){
                 $0.title = "終了"
-                //$0.dateFormatter = type(of: self).dateFormat
                 $0.minimumDate = type(of: self).dateFormat.date(from: "1900/01/01") ?? Date()
                 $0.maximumDate = Date()
                 $0.value = self.endedOn
@@ -92,7 +108,6 @@ class AggregateSettingViewController: FormViewController {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     //
     //  Doneボタンタップ時の処理
@@ -110,17 +125,5 @@ class AggregateSettingViewController: FormViewController {
         vc.aggregateType = self.aggregateType
         vc.hidesBottomBarWhenPushed = true    //  タブバーを非表示にします
         self.navigationController?.pushViewController(vc as UIViewController, animated: true)
-
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

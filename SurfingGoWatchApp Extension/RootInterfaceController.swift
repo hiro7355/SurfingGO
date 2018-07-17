@@ -35,7 +35,5 @@ class RootInterfaceController: WKInterfaceController {
         let contexts = ["1","1","1"] as [Any]
         
         WKInterfaceController.reloadRootPageControllers(withNames: pages, contexts: contexts, orientation: WKPageOrientation.horizontal, pageIndex: pageIndex)
-        
     }
-
 }

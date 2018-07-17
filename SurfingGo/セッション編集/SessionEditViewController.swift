@@ -15,52 +15,34 @@ protocol SessionEditViewControllerDelegate {
 }
 
 class SessionEditViewController: FormViewController, SurfBoardSettingViewControllerDelegate, SurfPointSettingViewControllerDelegate {
-    
     var waveSession : WaveSession!
     var indexPath : IndexPath?
     var delegate : SessionEditViewControllerDelegate!
-    
     var surfBoardArray : [SurfBoard]!
     let addSurfboardButtonName : String = "-- 新規追加 --"
     var surfPointArray : [SurfPoint]!
-
     var isNewSession : Bool = false
     var isNoWave : Bool = false
-
     let realm = try! Realm()
+
     //
     //  サーフボードが新規登録された
     //  MARK: SurfBoardSettingViewControllerDelegate
     //
     func updated(surfBoard: SurfBoard?, surfBoardArray: [SurfBoard], realm: Realm) {
-        
         self.surfBoardArray = surfBoardArray
         self.waveSession.surfBoard = surfBoard      //  サーフボードを更新します（呼び出しもとで、すでにrealmのtry中になっています）
         
         let row : PickerInputRow<String> = self.form.rowBy(tag: "surfBoard")!
         row.options = self.surfBoardNames(fromSurfBoardArray: surfBoardArray)
         row.value = surfBoard?.name  //  この処理により、onChangeが呼び出される点に注意
-        
-
     }
     
-
-    /*
-    func surfBoardArrayFromApp(realm : Realm) -> [SurfBoard] {
-        
-        //  サーフボード名の配列を作成します
-        SurfBoard.updateSurfBoards(realm: realm)
-        return SurfBoard.surfBoardArray
-    }
-    */
     func surfBoardNames(fromSurfBoardArray surfBoardArray : [SurfBoard]) -> [String] {
-        
         var surfBoardNames : [String] = []
         surfBoardNames.append("")   //  空白を追加
         for surfBoard in surfBoardArray {
-            
             if surfBoard.isPickup {
-
                 //　選択対象のサーフボードのみ追加します
                 surfBoardNames.append(surfBoard.name)
             }
@@ -69,12 +51,12 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
         
         return surfBoardNames
     }
+
     //
     //  サーフポイントが新規登録された
     //  MARK: SurfPointSettingViewControllerDelegate
     //
     func updated(surfPoint: SurfPoint?, surfPointArray: [SurfPoint], realm: Realm) {
-        
         self.surfPointArray = surfPointArray
         self.waveSession.surfPoint = surfPoint      //  サーフポイントを更新します（呼び出しもとで、すでにrealmのtry中になっています）
         
@@ -83,11 +65,10 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
         row.value = surfPoint?.name  //  この処理により、onChangeが呼び出される点に注意
         
         self.addWaveSessionIfNew()
-
     }
+
     func addWaveSessionIfNew() {
         if self.isNewSession {
-            
             //  セッションIDを設定します
             let app : AppDelegate = UIApplication.shared.delegate as! AppDelegate
             self.waveSession.id = app.getAndUpdateNextWaveSessionId()
@@ -98,16 +79,13 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
             
             self.isNewSession = false
         }
-        
     }
 
     func surfPointNames(fromSurfPointArray surfPointArray : [SurfPoint]) -> [String] {
-        
         var names : [String] = []
         names.append("")   //  空白を追加
         for value in surfPointArray {
             if value.isPickup {
-                
                 //　選択対象のポイントのみ追加します
                 names.append(value.name)
             }
@@ -119,7 +97,6 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 
         if self.waveSession.id == -1 {
             self.isNewSession = true
@@ -137,50 +114,8 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
         SurfPoint.updateSurfPoints(realm: self.realm)
         self.surfPointArray =  SurfPoint.surfPointArray
         let surfPointNames : [String] = self.surfPointNames(fromSurfPointArray : self.surfPointArray)
-
         
         self.form +++ Section()
-            /*
-            { section in
-                var header = HeaderFooterView<SessionDetailHeaderFooterView>(.nibFile(name: "SessionDetailHeaderFooterView", bundle: nil))
-                // Will be called every time the header appears on screen
-                header.onSetupView = { view, _ in
-                    // Commonly used to setup texts inside the view
-                    // Don't change the view hierarchy or size here!
-                }
-                section.header = header
-            }
- */
-            /*
-            <<< TextRow("pointName"){
-                $0.title = "ポイント名"
-                $0.placeholder = ""
-                if let name = self.waveSession.surfPoint?.name {
-                    $0.value = name
-                }
-
-                }.onChange{row in
-                    // Update an object with a transaction
-                    try! self.realm.write {
-                        self.waveSession.surfPoint?.name = row.value!
-                        
-                        
-                        if self.isNewSession {
-                            
-                            //  セッションIDを設定します
-                            let app : AppDelegate = UIApplication.shared.delegate as! AppDelegate
-                            self.waveSession.id = app.getAndUpdateNextWaveSessionId()
-                            
-                            self.realm.add(self.waveSession, update: true)
-                            
-                            self.delegate.updted(waveSession: self.waveSession)
-
-                            self.isNewSession = false
-                        }
-                    }
-                    
-            }
-            */
             <<< PickerInputRow<String>("surfPoint"){
                 $0.options = surfPointNames
                 $0.title = "サーフポイント"
@@ -257,17 +192,6 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
                     
                 }
             }
-            /*
-            <<< TitleImagePickerRow() { row in
-                row.title = "満足度😥"
-                let index = WaveSession.satisfactionLevelIndex(fromValue: self.waveSession.satisfactionLevel)
-                row.value =  WaveSession.statisfactionLevelTitleImage(indexOf: index)
-                row.options = WaveSession.statisfactionLevelTitleImages()
-                }.onChange{ row in
-                    try! self.realm.write {
-                        self.waveSession.satisfactionLevel = (row.value?.value)!
-                    }
-            }*/
             <<< PickerInputRow<String>() {
                 $0.options = WaveSession.satisfactionLevelSmilyAndTexts()
                 $0.title = "満足度"
@@ -346,13 +270,12 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
     }
     
     func startedAtRow() -> BaseRow? {
-
-        if isNewSession || isNoWave {
+        if isNewSession || !self.waveSession.isWatch {
             let row =  DateTimeRow("startedAt"){
                 $0.title = "開始日時"
                 //$0.dateFormatter = type(of: self).dateFormat
                 $0.maximumDate = Date()
-                $0.value = Date()
+                $0.value = self.waveSession.startedAt
                 $0.onChange{ [unowned self] row in
                      try! self.realm.write {
                         self.waveSession.startedAt = row.value!
@@ -372,7 +295,7 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
     }
 
     func timeRow() -> BaseRow? {
-        if isNewSession || isNoWave {
+        if isNewSession  || !self.waveSession.isWatch {
             let row = PickerInputRow<String>() {
                 let unit : String = "分"
                 for value in [30,60,90,120,150,180,210,240,270,300] {
@@ -383,7 +306,7 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
                 $0.value = String(Int(self.waveSession.time/60)) + unit
                 $0.onChange{ [unowned self] row in
                     let value : String = row.value!
-                    let minString = value.prefix(value.characters.count - unit.characters.count)
+                    let minString = value.replacingOccurrences(of: unit, with: "")
                     
                     try! self.realm.write {
                         self.waveSession.time = Double(Int(minString)! * 60)
@@ -433,7 +356,6 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -442,7 +364,4 @@ class SessionEditViewController: FormViewController, SurfBoardSettingViewControl
             self.delegate.updated(waveSession: self.waveSession, atIndexPath: self.indexPath)
         }
     }
-    
-
-
 }

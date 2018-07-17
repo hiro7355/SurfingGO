@@ -11,16 +11,19 @@ import UIKit
 import CoreLocation
 import RealmSwift
 
-
 let UNKNOWN_TEXT = "不明"
 
 class WaveSession : Object  {
     
+    static let ValidHorizontalAccuracy = 15.0    // ライディング時の有効な位置情報の水平範囲
+    static let MinRidingTime = 2.0               //  ライディングとみなす最小のライディング時間
+    static let RidingSpeed : Double = 3.0   //  ライディング識別スピードしきい値（m/s）x*3600/1000 = 10.8 km/h
+    static let RidingStartKeepTime : TimeInterval = 3.5    //  ライディング開始識別スピードしきい値の継続時間（秒）。この時間一定のスピード以上を継続するとライディング開始と判断します
+    static let RidingEndKeepTime : TimeInterval = 3.0    //  ライディング終了識別スピードしきい値の継続時間（秒）。この時間一定のスピード以下を継続するとライディング終了と判断します
     
     //  realmに保存
     @objc dynamic var id = -1                        //  セッションID
     var waves : List<Wave> = List<Wave>()           //  のった波
-//    @objc dynamic var stardedAt : Date = Date()     //  セッション開始日時
     @objc dynamic var startedAt : Date = Date()     //  セッション開始日時
     @objc dynamic var surfPoint : SurfPoint?        //  ポイント
     @objc dynamic var time : TimeInterval = 0       //  セッション時間（単位秒）
@@ -36,12 +39,24 @@ class WaveSession : Object  {
     @objc dynamic var windDirection : Int = -1       //  風向き（0:オフ、90:再度、180:オン）
     @objc dynamic var surfBoard : SurfBoard?   //  サーフボード
     @objc dynamic var memo : String = ""            //  メモ
+    @objc dynamic var isWatch : Bool = false     //  AppleWatchで記録した場合はtrue
+    @objc dynamic var firstLatitude: Double = 0 //  start時の位置情報(realm保存用)
+    @objc dynamic var firstLongitude: Double = 0 //  start時の位置情報（realm保存用）
+    
+    var firstLocationCoordinate: CLLocationCoordinate2D? {
+        if self.firstLongitude != 0 && self.firstLatitude != 0 {
+            return CLLocationCoordinate2D(latitude: self.firstLatitude, longitude: self.firstLongitude)
+        } else {
+            return nil
+        }
+    }
+    var firstLocation : CLLocation?   //  start時の位置情報(applewatchで位置情報取得時に設定される。iphone側では使わない)
+
     static let conditionLevelTexts : [String] = [UNKNOWN_TEXT, "×","▼", "△", "○", "◎"]
     static let conditionLevelValues : [Int] = [-1, 0,20, 40, 60, 80]
     static let satisfactionLevelTexts : [String] = [UNKNOWN_TEXT, "最低","ダメ", "まぁまぁ", "いいね", "最高！"]
     static let satisfactionLevelSmilys : [String] = ["", "😭","😞", "🙂", "😄", "🤣"]
     static let satisfactionLevelValues : [Int] = [-1, 0,20, 40, 60, 80]
-//    static let satisfactionLevelImages : [UIImage?] = [UIImage(named: "satisfaction1"),UIImage(named: "satisfaction2"), UIImage(named: "satisfaction3"), UIImage(named: "satisfaction4"), UIImage(named: "satisfaction5")]
     static let waveHeightTexts : [String] = [UNKNOWN_TEXT, "膝", "腿", "腰", "腹", "胸", "肩", "頭", "頭オーバー", "頭半", "ダブル"]
     static let waveHeightValues : [Int] = [-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     static let waveDirectionTexts : [String] = [UNKNOWN_TEXT, "北", "北東", "東", "南東", "南", "南西", "西", "北西"]
@@ -51,10 +66,13 @@ class WaveSession : Object  {
     static let windWeightTexts : [String] = [UNKNOWN_TEXT, "無風", "弱い", "やや強い", "強い", "極強い"]
     static let windWeightValues : [Int] = [-1, 0, 2, 4, 8, 10]
 
+    //  最高速度（集計用）単位秒速メートル
+    static let topSpeedTexts : [String] = ["0km/h〜", "10km/h〜", "20km/h〜", "30km/h〜", "40km/h〜"]
+    static let topSpeedValues : [Int] = [0, 10, 20, 30, 40]
+    //  最高距離（集計用）単位m
+    static let longestDistanceTexts : [String] = ["0m〜", "25m〜", "50m〜", "100m〜", "200m〜"]
+    static let longestDistanceValues : [Int] = [0,25,50,100,200]
     static let meterUnit : String = "m"
-    
-    var firstLocation : CLLocation?
-    
 
     //　プライマリーキーの設定
     override static func primaryKey() -> String? {
@@ -71,6 +89,7 @@ class WaveSession : Object  {
         }
         return totalWaveCount
     }
+
     // 評価（波質）
     static func conditionLevel(fromLabel label : String) -> Int {
         for index in 0..<WaveSession.conditionLevelTexts.count {
@@ -80,8 +99,8 @@ class WaveSession : Object  {
         }
         return -1       //
     }
+
     static func conditionLevelLabel(fromValue value : Int) -> String {
-        
         if value == -1 {
             return ""
         }
@@ -128,23 +147,7 @@ class WaveSession : Object  {
         }
         return -1       //
     }
-    /*
-    static func statisfactionLevelTitleImages() -> [TitleImage]{
-        
-        var titleImages = [TitleImage]()
-        for index in 0..<5 {
-            titleImages.append(statisfactionLevelTitleImage(indexOf: index))
-        }
-        return titleImages
-        
-    }
-    static func statisfactionLevelTitleImage(indexOf index: Int) -> TitleImage {
-        
-         return TitleImage(image: WaveSession.satisfactionLevelImages[index], titleOfImage: WaveSession.satisfactionLevelTexts[index], value: WaveSession.satisfactionLevelValues[index])
-        
-    }
 
-    */
     // 評価（満足度）
     func satisfactionLevelText() -> String {
         return WaveSession.satisfactionLevelLabel(fromValue : self.satisfactionLevel)
@@ -152,13 +155,7 @@ class WaveSession : Object  {
     func setSatisfactionLevelText(text : String) -> Void {
         self.satisfactionLevel = WaveSession.satisfactionLevel(fromLabel: text)
     }
-    /*
-    func satisfactionLevelImage() -> UIImage {
-        
-        let index = WaveSession.satisfactionLevelIndex(fromValue: self.satisfactionLevel)
-        return WaveSession.satisfactionLevelImages[index]!
-    }
-    */
+
     // 評価（満足度） スマイリー
     static func satisfactionLevelSmilyAndTexts() -> [String] {
         var values : [String] = []
@@ -336,52 +333,45 @@ class WaveSession : Object  {
     }
     
     func wavesCountText() -> String {
-        return  WaveSession.wavesCountText(forWaveCount : self.waves.count)
-//        return  String(self.waves.count)+"本"
+        return  self.isWatch ? WaveSession.wavesCountText(forWaveCount : self.waves.count) : ""
     }
     static func wavesCountText(forWaveCount : Int) -> String {
-        return  forWaveCount > 0 ? String(forWaveCount)+WaveSession.waveCountUnit(forWaveCount : forWaveCount) : ""
+        return  String(forWaveCount)+WaveSession.waveCountUnit(forWaveCount : forWaveCount)
     }
     static func waveCountUnit(forWaveCount : Int) -> String {
-        return  forWaveCount > 0 ? (forWaveCount == 1 ? "Wave" : "Waves") : ""
+        return  forWaveCount > 1 ? "Waves" : "Wave"
     }
 
     func longestDistanceText() -> String {
-        return self.longestDistance > 0 ? String(NumUtils.value1(forDoubleValue: self.longestDistance))+WaveSession.meterUnit : ""
+        return self.isWatch ? String(NumUtils.value1(forDoubleValue: self.longestDistance))+WaveSession.meterUnit : ""
     }
     func longestDistanceText2() -> String {
-        return self.longestDistance > 0 ? "最長"+String(NumUtils.value1(forDoubleValue: self.longestDistance))+WaveSession.meterUnit : ""
+        return self.isWatch ? "最長"+String(NumUtils.value1(forDoubleValue: self.longestDistance))+WaveSession.meterUnit : ""
     }
     func totalDistanceText() -> String {
-        return self.totalDistance > 0 ? String(NumUtils.value1(forDoubleValue: self.totalDistance))+WaveSession.meterUnit : ""
+        return self.isWatch ? String(NumUtils.value1(forDoubleValue: self.totalDistance))+WaveSession.meterUnit : ""
     }
     func totalDistanceText2() -> String {
-        return self.totalDistance > 0 ? "合計" + String(NumUtils.value1(forDoubleValue: self.totalDistance))+WaveSession.meterUnit : ""
+        return self.isWatch ? "合計" + String(NumUtils.value1(forDoubleValue: self.totalDistance))+WaveSession.meterUnit : ""
     }
     func topSpeedText() -> String {
-        return self.topSpeed > 0 ? String(Int(NumUtils.kph(fromMps: self.topSpeed)))+"km/h" : ""
+        return self.isWatch ? String(Int(NumUtils.kph(fromMps: self.topSpeed)))+"km/h" : ""
     }
     func topSpeedText2() -> String {
-        return self.topSpeed > 0 ? "最速" + String(Int(NumUtils.kph(fromMps: self.topSpeed)))+"km/h" : ""
+        return self.isWatch ? "最速" + String(Int(NumUtils.kph(fromMps: self.topSpeed)))+"km/h" : ""
     }
     func averageSpeedText() -> String {
-        return self.topSpeed > 0 ? String(Int(NumUtils.kph(fromMps: self.averageSpeed)))+"km/h" : ""
+        return self.isWatch ? String(Int(NumUtils.kph(fromMps: self.averageSpeed)))+"km/h" : ""
     }
     func averageSpeedText2() -> String {
-        return self.topSpeed > 0 ? "平均" + String(Int(NumUtils.kph(fromMps: self.averageSpeed)))+"km/h" : ""
+        return self.isWatch ? "平均" + String(Int(NumUtils.kph(fromMps: self.averageSpeed)))+"km/h" : ""
     }
 
     var ridingStartLocation : CLLocation? = nil
     var lastUpdatedLocation : CLLocation? = nil
     var ridingEndLocation : CLLocation? = nil
-
-    
     var lastWave : Wave = Wave()
     
-    let RidingSpeed : Double = 3.0   //  ライディング識別スピードしきい値（m/s）x*3600/1000 = 10.8 km/h
-    let RidingStartKeepTime : TimeInterval = 3.5    //  ライディング開始識別スピードしきい値の継続時間（秒）。この時間一定のスピード以上を継続するとライディング開始と判断します
-    let RidingEndKeepTime : TimeInterval = 3.0    //  ライディング終了識別スピードしきい値の継続時間（秒）。この時間一定のスピード以下を継続するとライディング終了と判断します
-
     enum RidingModeType: Int {
         case Waiting = 1    //  波待ち中
         case RidingStarting // 　ライディング開始判別中（Waitingから遷移）
@@ -391,16 +381,12 @@ class WaveSession : Object  {
     
     var ridingMode : RidingModeType = RidingModeType.Waiting
     
-
-
     func start() -> Void {
     }
     
-    
     func updateLocation(location: CLLocation) -> Void {
-
         let horizontalAccuracy : Double = location.horizontalAccuracy
-        if horizontalAccuracy < 0.0 || horizontalAccuracy > 15.0 {
+        if horizontalAccuracy < 0.0 || horizontalAccuracy > WaveSession.ValidHorizontalAccuracy {
             return
         }
         
@@ -420,6 +406,8 @@ class WaveSession : Object  {
                 
                 //  開始判別中モードにします
                 self.ridingMode = RidingModeType.RidingStarting
+                Swift.print("モード変更：開始判別中!")
+
             }
         case RidingModeType.RidingStarting: // 　ライディング開始判別中（Waitingから遷移）
             
@@ -430,10 +418,11 @@ class WaveSession : Object  {
 
                 let time = location.timestamp.timeIntervalSince1970 - (self.ridingStartLocation?.timestamp.timeIntervalSince1970)!
                 
-                if time > RidingStartKeepTime {
+                if time > WaveSession.RidingStartKeepTime {
                     //  一定時間ライディング開始判別中をキープしたのでライディング中にします
                     //  ライディング中モードにします
                     self.ridingMode = RidingModeType.Riding
+                    Swift.print("モード変更：ライディング中!")
                 }
 
             } else {
@@ -445,6 +434,8 @@ class WaveSession : Object  {
                 
                 //  ライディング中の波のいち情報をリセットします
                 lastWave.reset()
+                Swift.print("モード変更：波待ち中にもどる")
+
             }
             
         case RidingModeType.Riding:         //  ライディング中
@@ -461,7 +452,7 @@ class WaveSession : Object  {
                 
                 //  ライディング中かもしれない位置情報を追加します
                 lastWave.addTempLocation(location: location)
-
+                Swift.print("モード変更：ライディング終了判別中!")
             }
 
         case RidingModeType.RidingEnding:   //  ライディング終了判別中
@@ -471,30 +462,22 @@ class WaveSession : Object  {
                 //  ライディング中かもしれない位置情報を追加します(Watchで記録しておく必要がある。iPhoneに転送してiPhone側で終了判別できるようにするため)
                 lastWave.addTempLocation(location: location)
                 
-                
                 let time = location.timestamp.timeIntervalSince1970 - (self.ridingEndLocation?.timestamp.timeIntervalSince1970)!
                 
-                if time > RidingEndKeepTime {
+                if time > WaveSession.RidingEndKeepTime {
                     //  一定時間ライディング停止判別中をキープしたのでライディング停止にします
-                    //  波待ち中モードにします
-                    self.ridingMode = RidingModeType.Waiting
-                    
-                    self.lastWave.commit()
-                    
-                    //  セッション中の波に追加します
-                    self.waves.append(self.lastWave)
-                    
-                    self.lastWave = Wave()
+                    if self.endRiding() {
+                        Swift.print("ライディング停止")
+                    }
                 }
             } else {
                 //  ライディング終了位置をリセットします
                 self.ridingEndLocation = nil
                 //  ライディング中モードにもどします
                 self.ridingMode = RidingModeType.Riding
-                
                 //  ライディング中かもしれない位置情報をライディング中位置情報に追加します
                 lastWave.commitTempLocations(location : location)
-
+                Swift.print("モード変更：ライディングモードにもどる")
             }
         }
         
@@ -502,18 +485,50 @@ class WaveSession : Object  {
         self.lastUpdatedLocation = location
     }
     
-    
+    //
+    // ライディングを終了します
+    //
+    func endRiding() -> Bool {
+        var result = false
+        
+        if self.ridingMode  == RidingModeType.RidingEnding || self.ridingMode == RidingModeType.Riding {
+            
+            //  波待ち中モードにします
+            self.ridingMode = RidingModeType.Waiting
+
+            self.lastWave.calc()
+            
+            if self.lastWave.time > WaveSession.MinRidingTime {
+                
+                self.lastWave.commit()
+                
+                //  セッション中の波に追加します
+                self.waves.append(self.lastWave)
+                
+                result = true
+                Swift.print("ライディング追加!")
+
+            } else {
+                Swift.print("ライディング時間が短すぎ!")
+            }
+            
+            Swift.print("モード変更：波待ち中")
+
+            self.lastWave = Wave()
+        }
+
+        return result
+    }
+
     //
     //  ライディング中継続を判別します
     //
     func isContinueRiding(location : CLLocation) -> Bool {
-        
         let speed : Double = location.speed
         
-        return speed > RidingSpeed ? true : false
+        return speed > WaveSession.RidingSpeed ? true : false
     }
     func commit() {
-        
         //  Realmように位置情報を変換してリストに追加します
         for wave in self.waves {
             // Realmのobjectに変換します
@@ -521,18 +536,11 @@ class WaveSession : Object  {
         }
     }
 
-    
     func print() {
-        
-        
         Swift.print("Wave:\(self.waves.count)本")
-        
         for wave : Wave in waves {
             Swift.print(wave.toString())
         }
-        
-        
-        
     }
     
     //
@@ -543,13 +551,11 @@ class WaveSession : Object  {
     // @objc dynamic var topSpeed : Double = 0         //  最高速度（単位秒速メートル）
     //
     func calc(withWaveCalc : Bool) {
-       
         var totalDistance : Double = 0
         var totalRidingTime : Double = 0
         var longestDistance : Double = 0
         var topSpeed : Double = 0
 
-        
         for wave in self.waves {
             
             if withWaveCalc {
@@ -567,36 +573,30 @@ class WaveSession : Object  {
             if topSpeed < wave.topSpeed {
                 topSpeed = wave.topSpeed
             }
-
         }
         
         self.averageSpeed = totalDistance / totalRidingTime
         self.totalDistance = totalDistance
         self.longestDistance = longestDistance
         self.topSpeed = topSpeed
-        
     }
     
     
     func topSpeedWave() -> Wave? {
-        
         var topSpeed : Double = 0
         var topSpeedWave : Wave?
         
         for wave in self.waves {
-            
             //  トップスピードを更新します
             if topSpeed < wave.topSpeed {
                 topSpeed = wave.topSpeed
                 topSpeedWave = wave
             }
-            
         }
         return topSpeedWave
-        
     }
+
     func longestDistanceWave() -> Wave? {
-        
         var longestDistance : Double = 0
         var longestDistanceWave : Wave?
         
@@ -616,14 +616,6 @@ class WaveSession : Object  {
         //  セッション時間を設定します
         self.time = (endedAt.timeIntervalSince1970 - self.startedAt.timeIntervalSince1970)
 
-    }
-    static func Create(fromFilePath filePath : String) -> WaveSession {
-        
-        let dict : NSDictionary = NSDictionary(contentsOfFile : filePath)!
-        
-        return WaveSession.Create(fromLocationsText: dict.object(forKey: "locations") as? String, andStartedAtText: dict.object(forKey: "startedAt") as? String, andEndedAtText: dict.object(forKey: "endedAt") as? String)
-        
-        
     }
     
     static func location(from locationValuesText : String) -> CLLocation? {
@@ -649,23 +641,19 @@ class WaveSession : Object  {
         }
         
     }
+
     static func Create(fromWavesLocationTexts wavesLocationTexts : [String]?,
                        andFirstLocationText firstLocationText : String?, andStartedAtText startedAtText : String?, andEndedAtText endedAtText : String?) -> WaveSession {
-        
-        
         let session : WaveSession = WaveSession()
-        
+        session.isWatch = true      //  apple Watchからの情報にもとづいて生成されたことを示します
+
         if let wavesLocationTexts = wavesLocationTexts {
             for locationTexts in wavesLocationTexts {
                 let locationArray : [String] = locationTexts.components(separatedBy: "\n")
                 
                 let wave = Wave()
-                //  先頭行はタイトルなので削除
-             //   locationArray.removeFirst()
                 
                 for locationValuesText : String in locationArray {
-                    
-                    
                     //  位置情報を追加します
                     if let location = WaveSession.location(from: locationValuesText) {
                         wave.addLocation(location: location)
@@ -673,109 +661,50 @@ class WaveSession : Object  {
                 }
                 
                 session.waves.append(wave)
-                
-                
             }
             session.calc(withWaveCalc: true)
-
         }
 
         if let firstLocationText = firstLocationText {
-            
-            session.firstLocation = WaveSession.location(from: firstLocationText)
+            if let firstLocation = WaveSession.location(from: firstLocationText) {
+                session.firstLatitude = firstLocation.coordinate.latitude
+                session.firstLongitude = firstLocation.coordinate.longitude
+            }
         }
-        
-        
         
         if let startedAtText = startedAtText {
             //  セッション開始日時を設定します
             session.startedAt = DateUtils.dateFromString(string: startedAtText, format: "yyyy-MM-dd HH:mm:ss Z") as Date
             
             if let endedAtText = endedAtText {
-                
                 let endedAt : Date = DateUtils.dateFromString(string: endedAtText, format: "yyyy-MM-dd HH:mm:ss Z") as Date
                 
                 //  セッション時間を設定します
                 session.time = (endedAt.timeIntervalSince1970 - session.startedAt.timeIntervalSince1970)
             }
         }
-        
         return session
-        
-    }
-
-    static func Create(fromLocationsText locationsText : String?, andStartedAtText startedAtText : String?, andEndedAtText endedAtText : String?) -> WaveSession {
-
-        
-        let session : WaveSession = WaveSession()
-        
-        if let locationsText = locationsText {
-            
-            var locationArray : [String] = locationsText.components(separatedBy: "\n")
-            
-            //  先頭行はタイトルなので削除
-            locationArray.removeFirst()
-            
-            for locationValuesText : String in locationArray {
-                
-                let locationValues : [String] = locationValuesText.components(separatedBy: ",")
-                
-                let latitudeString : String = locationValues[2]
-                let longitudeString: String = locationValues[3]
-                let altitudeString: String = locationValues[4]
-                let horizontalAccuracyString: String = locationValues[5]
-                let verticalAccuracyString: String = locationValues[6]
-                let courseString: String = locationValues[7]
-                let speedString: String = locationValues[1]
-                let timestampString: String = locationValues[8]
-                let timestamp : NSDate = DateUtils.dateFromString(string: timestampString, format: "yyyy-MM-dd HH:mm:ss Z")
-                
-                let location : CLLocation = CLLocation(coordinate: CLLocationCoordinate2D(latitude: atof(latitudeString), longitude: atof(longitudeString)), altitude: atof(altitudeString), horizontalAccuracy : atof(horizontalAccuracyString), verticalAccuracy : atof(verticalAccuracyString), course: atof(courseString), speed: atof(speedString), timestamp: timestamp as Date)
-                
-                //  位置情報を追加します
-                session.updateLocation(location: location)
-                
-            }
-            session.calc(withWaveCalc: true)
-        }
-        
-        
-        
-        if let startedAtText = startedAtText {
-            //  セッション開始日時を設定します
-            session.startedAt = DateUtils.dateFromString(string: startedAtText, format: "yyyy-MM-dd HH:mm:ss Z") as Date
-            
-            if let endedAtText = endedAtText {
-                
-                let endedAt : Date = DateUtils.dateFromString(string: endedAtText, format: "yyyy-MM-dd HH:mm:ss Z") as Date
-                
-                //  セッション時間を設定します
-                session.time = (endedAt.timeIntervalSince1970 - session.startedAt.timeIntervalSince1970)
-            }
-        }
-        
-        return session
-        
     }
 
     static func loadWaveSessionsBySections(realm : Realm) -> [Results<WaveSession>] {
         return loadWaveSessionsBySections(realm : realm, fromDate : nil, toDate : nil)
     }
+
     static func loadWaveSessionsBySections(realm : Realm, fromDate : Date?, toDate : Date?) -> [Results<WaveSession>] {
         //  realmからデータを取得します
         var waveSessions : Results<WaveSession>
 
         if fromDate == nil {
             waveSessions = realm.objects(WaveSession.self)
+            
         } else {
             waveSessions = realm.objects(WaveSession.self).filter("startedAt >= %@ AND startedAt < %@", fromDate! , toDate!)
         }
         
-        
-        return loadWaveSessionsBySections(realm : realm, waveSessions : waveSessions)
+        return loadWaveSessionsBySections(waveSessions : waveSessions)
     }
-    static func loadWaveSessionsBySections(realm : Realm, waveSessions : Results<WaveSession>) -> [Results<WaveSession>] {
-        
+
+    static func loadWaveSessionsBySections(waveSessions : Results<WaveSession>) -> [Results<WaveSession>] {
         var waveSessionsBySections : [Results<WaveSession>] = []
 
         if waveSessions.count > 0 {
@@ -794,7 +723,6 @@ class WaveSession : Object  {
 
                     waveSessionsBySections.append(waveSessionsBySection)
                 }
-                
                 lastDate = preMonthDate
                 
             } while firstDate < lastDate
@@ -803,30 +731,28 @@ class WaveSession : Object  {
         return waveSessionsBySections
     }
     
+    static func loadWaveSessions(realm: Realm) -> Results<WaveSession> {
+        return realm.objects(WaveSession.self)
+    }
+    
     
     //
     //  waveを削除します
     //
     func remove(wave : Wave, fromRealm realm : Realm) {
-        
         if let index = self.waves.index(of: wave) {
-
             //  realmから削除します
             try! realm.write() {
                 self.waves.remove(at: index)
                 self.calc(withWaveCalc: false)
             }
-            
         }
-        
-        
     }
     
     //
     //  waveのindexをもどします
     //
     func index(ofWave : Wave) -> Int? {
-        
         return self.waves.index(of: ofWave)
     }
 
@@ -846,5 +772,40 @@ class WaveSession : Object  {
             return ""
         }
     }
+    
+    static func surfPoint(fromLocationCoordinate: CLLocationCoordinate2D?, completion: ((_ surfpoint: SurfPoint?) -> Void)?) -> Bool {
+        if let locationCoordinate = fromLocationCoordinate {
+            //  位置情報から住所を取得します
+            GeoUtils.address(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude) { (address, placemark) in
+                
+                var foundSurfPoint: SurfPoint? = nil
+                
+                if address != nil && placemark != nil {
+                    
+                    //  住所が一覧に存在するか調べます
+                    if let surfPoint = SurfPoint.find(byAddressKey: address!, in: SurfPoint.surfPointArray) {
+                        
+                        foundSurfPoint = surfPoint
+                        
+                    } else {
+                        
+                        //  住所が一覧に存在しないのであらたに登録します
+                        if let name : String = placemark!.pointName() {
+                            
+                            foundSurfPoint = SurfPoint.newSurfPoint(name: name, addressKey: address!, latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude)
+                        }
+                    }
+                } else {
+                    //   住所取得に失敗
+                }
+                
+                completion?(foundSurfPoint)
+            }
+            
+            return true
 
+        } else {
+            return false
+        }
+    }
 }

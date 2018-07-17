@@ -20,8 +20,8 @@ class SurfPointSettingViewController: FormViewController {
     var surfPointArray : [SurfPoint]!
     var delegate : SurfPointSettingViewControllerDelegate!
     var realm : Realm!
-    
     var isNewSurfPoint : Bool = false
+    var newName: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,71 +40,7 @@ class SurfPointSettingViewController: FormViewController {
                 $0.value = self.surfPoint.name
                 }.onChange{row in
                     
-                    if let newName : String = row.value {
-                        
-                        
-                      //  if !SurfPoint.isExist(byName: newName, in: self.surfPointArray) {
-                            
-                            
-                            try! realm.write {
-                                
-                                
-                                self.surfPoint.name = newName
-                                
-                                if self.isNewSurfPoint {
-                                    
-                                    //  IDを設定します
-                                    self.surfPoint.id = SurfPoint.getAndUpdateNextSurfboardId()
-                                    
-                                    realm.add(self.surfPoint, update: true)
-                                    
-                                    self.surfPointArray.append(self.surfPoint)
-                                    
-                                    
-                                    self.isNewSurfPoint = false
-                                }
-                                
-                                self.delegate.updated(surfPoint: self.surfPoint, surfPointArray: self.surfPointArray, realm: realm)
-                            }
-                            
-                  //      }
-                        
-                    }
-                    
-            }
-            /*
-            //  TODO: 新規のときは表示しないようにすること
-            <<< SwitchRow("isPickup") {
-                $0.title = "選択対象"
-                $0.value = self.surfPoint.isPickup
-                }.onChange { row in
-                    try! realm.write {
-                        self.surfPoint.isPickup = row.value!
-                    }
-            }
- */
-            <<< TextRow("address"){
-                $0.title = "住所"
-                $0.placeholder = "サーフポイントの住所を入力"
-                $0.value = self.surfPoint.address
-                }.onChange{row in
-                    
-                    if let newAddress : String = row.value {
-                        
-                        try! realm.write {
-                            self.surfPoint.address = newAddress
-                        }
-                        
-                    }
-            }
-            <<< PickerInputRow<String>() {
-                $0.options = SurfPoint.directionTexts
-                $0.title = "向き"
-                $0.value = self.surfPoint.directionText()
-                }.onChange{ row in
-                    try! self.realm.write {
-                        self.surfPoint.setDirectionText(text: row.value!)
-                    }
+                    self.newName = row.value
             }
             +++ Section("メモ")
             <<< TextAreaRow("memo"){
@@ -121,9 +57,51 @@ class SurfPointSettingViewController: FormViewController {
                     
             }
     
-        
+            +++ Section()
+            <<< ButtonRow(){
+                $0.title =  "完了"
+                $0.onCellSelection({ (cell, row) in
+                    if let newName : String = self.newName {
+                        
+                        try! realm.write {
+                            
+                            if let findSurfPoint = SurfPoint.find(byName: newName, in: self.surfPointArray) {
+                                //  存在している場合は、既存のサーフポイントを設定します
+                                self.delegate.updated(surfPoint: findSurfPoint, surfPointArray: self.surfPointArray, realm: realm)
+                            } else {
+                                self.surfPoint.name = newName
+                                
+                                if self.isNewSurfPoint {
+                                    //  IDを設定します
+                                    self.surfPoint.id = SurfPoint.getAndUpdateNextSurfboardId()
+                                    
+                                    realm.add(self.surfPoint, update: true)
+                                    
+                                    self.surfPointArray.append(self.surfPoint)
+                                    
+                                    
+                                    self.isNewSurfPoint = false
+                                }
+                                
+                                self.delegate.updated(surfPoint: self.surfPoint, surfPointArray: self.surfPointArray, realm: realm)
+                            }
+                        }
+                    }
+                    self.navigationController?.popViewController(animated: true)
+                })
+        }
+            +++ Section()
+            <<< ButtonRow(){
+                $0.title =  "キャンセル"
+                //                    $0.cell.tintColor = UIColor.red
+                $0.onCellSelection({ (cell, row) in
+                    self.navigationController?.popViewController(animated: true)
+                })
+        }
+
         if  isNewSurfPoint == false {
-            form    +++ Section()
+            form
+                +++ Section()
                 <<< ButtonRow(){
                     $0.title = "削除"
                     $0.cell.tintColor = UIColor.red
@@ -131,21 +109,20 @@ class SurfPointSettingViewController: FormViewController {
                         
                         AlertViewUtils.showConfirmView(forViewController: self as UIViewController, title: "削除の確認", message: "削除してよろしいですか？", doneTitle: "はい", cancelTitle: "キャンセル", doneHandler: { (aa) in
                             
-                            //  削除します
-                            try! realm.write {
-                                self.realm.delete(self.surfPoint)
+                            //  セッションに割当があるか確認します
+                            if WaveSession.loadWaveSessions(realm: self.realm).filter("surfPoint.id=\(self.surfPoint.id)").count != 0 {
+                                AlertViewUtils.showConfirmView(forViewController: self as UIViewController, title: "\(self.surfPoint.name)の削除", message: "このサーフポイントはセッションに割当があります。削除するとセッションのサーフポイント名が空白になります。削除してよろしいですか？", doneTitle: "はい", cancelTitle: "キャンセル", doneHandler: { (aa) in
+                                    
+                                    //  ポイント削除
+                                    self.deleteSurfpoint()
+                                    
+                                })
+
+                                
+                            } else {
+                                //  割当がないのですぐに削除
+                                self.deleteSurfpoint()
                             }
-                            
-                            //  削除したことを通知します
-                            self.delegate.updated(surfPoint: nil, surfPointArray: self.surfPointArray, realm: self.realm)
-                            
-                            
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                //  画面閉じます
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                            
-                            
                         })
                     })
             }
@@ -153,20 +130,23 @@ class SurfPointSettingViewController: FormViewController {
 
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func deleteSurfpoint() {
+        //  削除します
+        try! realm.write {
+            self.realm.delete(self.surfPoint)
+        }
+        
+        //  削除したことを通知します
+        self.delegate.updated(surfPoint: nil, surfPointArray: self.surfPointArray, realm: self.realm)
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            //  画面閉じます
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 }

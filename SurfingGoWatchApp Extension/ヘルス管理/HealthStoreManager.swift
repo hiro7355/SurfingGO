@@ -20,18 +20,15 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
     static let LMLocationInfoKey: String = "LMLocationInfoKey"
     
     // MARK: - Properties
-    
     var workoutEvents = [HKWorkoutEvent]()
     var totalEnergyBurned: Double = 0
     var totalDistance: Double = 0
-    
     private let healthStore = HKHealthStore()
     private var activeDataQueries = [HKQuery]()
     private var workoutRouteBuilder: HKWorkoutRouteBuilder!
     private var locationManager: CLLocationManager!
     
     // MARK: - Health Store Wrappers
-    
     func start(_ workoutSession: HKWorkoutSession) {
         healthStore.start(workoutSession)
     }
@@ -48,19 +45,6 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
         healthStore.resumeWorkoutSession(workoutSession)
     }
     
-    // MARK: - Data Accumulation
-    /*
-    func startWalkingRunningQuery(from startDate: Date, updateHandler: @escaping ([HKQuantitySample]) -> Void) {
-        let typeIdentifier = HKQuantityTypeIdentifier.distanceWalkingRunning
-        startQuery(ofType: typeIdentifier, from: startDate) { _, samples, _, _, error in
-            guard let quantitySamples = samples as? [HKQuantitySample] else {
-                print("Distance walking running query failed with error: \(String(describing: error))")
-                return
-            }
-            updateHandler(quantitySamples)
-        }
-    }
-    */
     func startActiveEnergyBurnedQuery(from startDate: Date, updateHandler: @escaping ([HKQuantitySample]) -> Void) {
         let typeIdentifier = HKQuantityTypeIdentifier.activeEnergyBurned
         startQuery(ofType: typeIdentifier, from: startDate) { _, samples, _, _, error in
@@ -71,6 +55,7 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
             updateHandler(quantitySamples)
         }
     }
+
     //  心拍数の計測
     func startHeartRateQuery(from startDate: Date, updateHandler: @escaping ([HKQuantitySample]) -> Void) {
         let typeIdentifier = HKQuantityTypeIdentifier.heartRate
@@ -82,7 +67,6 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
             updateHandler(quantitySamples)
         }
     }
-
     
     func startAccumulatingLocationData() {
         guard CLLocationManager.locationServicesEnabled() else {
@@ -109,8 +93,6 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
         }
         
         locationManager.startUpdatingLocation()
-        
-//        workoutRouteBuilder = HKWorkoutRouteBuilder(healthStore: healthStore, device: nil)
     }
     
     func stopAccumulatingData() {
@@ -120,6 +102,7 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
         activeDataQueries.removeAll()
         
         locationManager?.stopUpdatingLocation()
+        locationManager = nil
     }
     
     private func startQuery(ofType type: HKQuantityTypeIdentifier, from startDate: Date, handler: @escaping
@@ -139,7 +122,6 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
     }
     
     // MARK: - Saving Data
-    
     func saveWorkout(withSession workoutSession: HKWorkoutSession, from startDate: Date, to endDate: Date) {
         // Create and save a workout sample
         let configuration = workoutSession.workoutConfiguration
@@ -178,50 +160,11 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
             // Samples have been added
             DispatchQueue.main.async {
                 //  スタート画面にもどります
-                //     RootInterfaceController.showStartPages()
-                
-                
             }
         }
-/*
-        
-        let totalDistanceSample = HKQuantitySample(type: HKSampleType.quantityType(forIdentifier: HKQuantityTypeIdentifier.distanceSwimming)!,
-                                                   quantity: totalDistanceQuantity(),
-                                                   start: startDate,
-                                                   end: endDate)
-        
-        // Add samples to workout
-        healthStore.add([totalEnergyBurnedSample, totalDistanceSample], to: workout) { (success: Bool, error: Error?) in
-            guard success else {
-                print("Adding workout subsamples failed with error: \(String(describing: error))")
-                return
-            }
-            
-            // Samples have been added
-            DispatchQueue.main.async {
-                //  スタート画面にもどります
-           //     RootInterfaceController.showStartPages()
-
-                
-            }
-        }
-        */
-        /*
-        // Finish the route with a sync identifier so we can easily update the route later
-        var metadata = [String: Any]()
-        metadata[HKMetadataKeySyncIdentifier] = UUID().uuidString
-        metadata[HKMetadataKeySyncVersion] = NSNumber(value: 1)
-        
-        workoutRouteBuilder?.finishRoute(with: workout, metadata: metadata) { (workoutRoute, error) in
-            if workoutRoute == nil {
-                print("Finishing route failed with error: \(String(describing: error))")
-            }
-        }
- */
     }
     
     // MARK: - CLLocationManagerDelegate
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let filteredLocations = locations.filter { (location: CLLocation) -> Bool in
             location.horizontalAccuracy <= kCLLocationAccuracyNearestTenMeters
@@ -230,24 +173,14 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
         guard !filteredLocations.isEmpty else { return }
         
         let locationData = locations.last as CLLocation!
-        let locationDataDic = [HealthStoreManager.LMLocationInfoKey : locationData]
+        let locationDataDic = [HealthStoreManager.LMLocationInfoKey : locationData as Any]
         
         // Notice and send location data. | 通知して位置情報を送信
         let center = NotificationCenter.default
-        center.post(name: NSNotification.Name(rawValue: HealthStoreManager.LMLocationUpdateNotification), object: self, userInfo: locationDataDic  )
-
-        
-        /*
-        workoutRouteBuilder.insertRouteData(filteredLocations) { (success, error) in
-            if !success {
-                print("inserting route data failed with error: \(String(describing: error))")
-            }
-        }
- */
+        center.post(name: NSNotification.Name(rawValue: HealthStoreManager.LMLocationUpdateNotification), object: self, userInfo: locationDataDic )
     }
     
     // MARK: - Convenience
-    
     func processWalkingRunningSamples(_ samples: [HKQuantitySample]) {
         totalDistance = samples.reduce(totalDistance) { (total, sample) in
             total + sample.quantity.doubleValue(for: .meter())
@@ -272,12 +205,8 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
     func requestAccessToHealthKit() {
         
         let allTypes = Set([HKObjectType.workoutType(),
-//                            HKSeriesType.workoutRoute(),
                             HKObjectType.quantityType(forIdentifier: .heartRate)!,
-//                            HKObjectType.quantityType(forIdentifier: .swimmingStrokeCount)!,
-//                            HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
                             HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-//                            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!
             ])
         
         healthStore.requestAuthorization(toShare: allTypes, read: allTypes) { (success, error) in
@@ -286,5 +215,4 @@ class HealthStoreManager: NSObject, CLLocationManagerDelegate {
             }
         }
     }
-
 }

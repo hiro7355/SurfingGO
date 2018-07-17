@@ -7,3 +7,10 @@
 //
 
 import Foundation
+class ArrayUtils {
+
+    /// int配列をString配列に変換
+    static func intToStringArray(intValues: [Int]) -> [String] {
+        return intValues.map { (String($0)) }
+    }
+}

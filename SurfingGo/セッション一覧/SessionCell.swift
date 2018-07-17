@@ -24,33 +24,22 @@ class SessionCell: UITableViewCell {
     @IBOutlet weak var ridingStackView: UIStackView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     func setupControls(waveSession : WaveSession) {
-        
         pointNameLabel.text = waveSession.surfPoint?.name
         waveConditionAndSizeLabel.text = waveSession.conditionLevelText() + waveSession.waveHeightText()
         windDirectionLabel.text = waveSession.windDirectionText()
         self.startedAtLabel.text = waveSession.startedAtText()
         self.timeLabel.text = waveSession.timeText()
-        
-      //  self.ridingStackView.isHidden = waveSession.waves.count == 0 ? true : false
-        
         self.waveCountLabel.text = waveSession.wavesCountText()
         self.longestDistanceLabel.text = waveSession.longestDistanceText2()
         self.topSpeedLabel.text =  waveSession.topSpeedText2()
-        
         self.memoLabel.text = waveSession.memo
-
         self.satisfactionLevelLabel.text = waveSession.satisfactionLevelSmily()
-
-        
     }
 }

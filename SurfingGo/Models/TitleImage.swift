@@ -9,7 +9,6 @@
 import UIKit
 
 struct TitleImage: Equatable  {
-    
     var image: UIImage?
     var titleOfImage: String
     var value : Int

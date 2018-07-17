@@ -21,7 +21,6 @@ class Location : Object {
     @objc dynamic var timestamp: Date = Date()
     
     func initFrom(CLLocation location : CLLocation) -> Void {
-        
         latitude = location.coordinate.latitude
         longitude = location.coordinate.longitude
         altitude = location.altitude
@@ -31,5 +30,4 @@ class Location : Object {
         speed = location.speed
         timestamp = location.timestamp
     }
-    
 }

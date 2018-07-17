@@ -2,16 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSHealthShareUsageDescription</key>
-    <string>サーフィン中のワークアウト情報を記録します</string>
-    <key>NSHealthUpdateUsageDescription</key>
-    <string>サーフィン中のワークアウト情報を記録します</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>サーフィン中の位置情報を記録します</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>サーフィン中の位置情報を記録します</string>
-    <key>NSLocationUsageDescription</key>
-    <string>サーフィン中の位置情報を記録します</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>ja_JP</string>
 	<key>CFBundleDisplayName</key>
@@ -29,9 +19,33 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>3608e08fc487b5088dee122108e7679d00fcb4d0</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSHealthShareUsageDescription</key>
+	<string>サーフィン中のワークアウト情報を記録します</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>サーフィン中のワークアウト情報を記録します</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>サーフィン中の位置情報を記録します</string>
+	<key>NSLocationUsageDescription</key>
+	<string>サーフィン中の位置情報を記録します</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>サーフィン中の位置情報を記録します</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

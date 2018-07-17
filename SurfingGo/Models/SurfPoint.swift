@@ -22,7 +22,7 @@ class SurfPoint : Object  {
     @objc dynamic var isAddressByLocation : Bool = false             //  位置情報から住所を取得した場合true(住所変更不可）
     @objc dynamic var latitude: Double = 0
     @objc dynamic var longitude: Double = 0
-//
+
     static var surfPoints : Results<SurfPoint>!
     static var nextSurfPointId : Int = 1
     static var surfPointArray : [SurfPoint] = []
@@ -31,7 +31,6 @@ class SurfPoint : Object  {
     static let directionValues : [Int] = [0, 23, 45, 68, 90, 113, 135, 158, 180, 203, 225, 248, 270, 293, 315, 338]
 
     static func newSurfPoint(name : String, addressKey : String, latitude : Double, longitude : Double ) -> SurfPoint {
-    
         let surfPoint = SurfPoint()
         surfPoint.id = SurfPoint.getAndUpdateNextSurfboardId()
         surfPoint.name = name
@@ -83,14 +82,12 @@ class SurfPoint : Object  {
             values.append(item.id)
         }
         return values
-        
     }
     
     //
     //  名前の一致するサーフポイントを見つけます
     //
     static func find(byName name : String, in surfPoints : [SurfPoint] ) -> SurfPoint? {
-        
         var result : SurfPoint? = nil
         
         for surfPoint in surfPoints {
@@ -99,18 +96,16 @@ class SurfPoint : Object  {
                 break
             }
         }
-        
         return result
     }
+
     static func isExist(byName name : String, in surfPoints : [SurfPoint] ) -> Bool {
-        
         return SurfPoint.find(byName: name, in: surfPoints) != nil ? true : false
     }
     //
     //  アドレスの一致するサーフポイントを見つけます
     //
     static func find(byAddressKey addressKey : String, in surfPoints : [SurfPoint] ) -> SurfPoint? {
-        
         var result : SurfPoint? = nil
         
         for surfPoint in surfPoints {
@@ -119,7 +114,6 @@ class SurfPoint : Object  {
                 break
             }
         }
-        
         return result
     }
 
@@ -129,8 +123,6 @@ class SurfPoint : Object  {
         return result
     }
     
-    
-    
     // 向き
     static func direction(fromLabel label : String) -> Int {
         for index in 0..<SurfPoint.directionTexts.count {
@@ -138,7 +130,7 @@ class SurfPoint : Object  {
                 return SurfPoint.directionValues[index]
             }
         }
-        return -1       //
+        return -1
     }
     static func directionLabel(fromValue value : Int) -> String {
         for index in 0..<SurfPoint.directionValues.count {
@@ -146,7 +138,7 @@ class SurfPoint : Object  {
                 return SurfPoint.directionTexts[index]
             }
         }
-        return ""       //
+        return ""
     }
     // 向き
     func directionText() -> String {
@@ -155,5 +147,4 @@ class SurfPoint : Object  {
     func setDirectionText(text : String) -> Void {
         self.direction = SurfPoint.direction(fromLabel: text)
     }
-
 }

@@ -14,5 +14,4 @@ class RidingPolyline : MKPolyline {
     var startCircle : MKCircle?
     var endCircle : MKCircle?
     var isSpecified : Bool = false  //  最速または最長のwave
-
 }

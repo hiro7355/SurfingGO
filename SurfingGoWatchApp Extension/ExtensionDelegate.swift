@@ -12,8 +12,6 @@ import WatchConnectivity
 class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
 
     func applicationDidFinishLaunching() {
-        // Perform any final initialization of your application.
-        
         //バッテリー状態の監視.
         WKInterfaceDevice.current().isBatteryMonitoringEnabled = true
         
@@ -80,10 +78,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate, WCSessionDelegate {
                 try manager.removeItem(at: fileTransfer.file.fileURL)
             } catch {
                 print("\(fileTransfer.file.fileURL.absoluteString)の削除失敗")
-                
             }
-            
-            
         } else {
             print("session didFinish: error: \(String(describing: error))")
         }

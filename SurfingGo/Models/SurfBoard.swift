@@ -20,7 +20,7 @@ class SurfBoard : Object  {
     @objc dynamic var volume : Float = 0            //  ボリューム（単位リットル）
     @objc dynamic var memo : String = ""            //  メモ
     @objc dynamic var isPickup : Bool = true        //  選択対象からはずす場合はfalse
-    //
+
     static var surfBoards : Results<SurfBoard>!
     static var nextSurfboardId : Int = 1
     static var surfBoardArray : [SurfBoard] = []
@@ -62,14 +62,12 @@ class SurfBoard : Object  {
             values.append(item.id)
         }
         return values
-
     }
     
     //
     //  名前の一致するサーフボードを見つけます
     //
     static func find(byName name : String, in surfBoards : [SurfBoard] ) -> SurfBoard? {
-        
         var result : SurfBoard? = nil
         
         for surfBoard in surfBoards {
@@ -81,8 +79,8 @@ class SurfBoard : Object  {
         
         return result
     }
+
     static func isExist(byName name : String, in surfBoards : [SurfBoard] ) -> Bool {
-        
         return SurfBoard.find(byName: name, in: surfBoards) != nil ? true : false
     }
 
